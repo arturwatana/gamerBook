@@ -7,6 +7,7 @@ export function changePlayerName(
   playerRepository: IPlayerRepository[]
 ) {
   const player: any = searchPlayerByEmail(email, playerRepository);
+  if (!player) throw new Error(`Player not found: ${email}`);
   player.name = newName.name;
   return player;
 }

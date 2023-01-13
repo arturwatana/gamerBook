@@ -8,6 +8,7 @@ export function deleteGameFromPlayer(
   playerRepository: IPlayerRepository[]
 ) {
   const player: any = searchPlayerByEmail(email, playerRepository);
+  if (!player) throw new Error(`Player not found: ${email}`);
   const findedGame = searchGame(player, gameName);
   player.games.splice(findedGame, 1);
 

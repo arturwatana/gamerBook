@@ -21,8 +21,8 @@ app.get("/players/:id", (req: any, res: any) => {
     const { id } = req.params;
     const player = searchById(id, playersRepository);
     res.json(player);
-  } catch (err) {
-    res.status(404).json(err);
+  } catch (err: any) {
+    res.status(404).json({ message: err.message });
   }
 });
 
@@ -31,8 +31,8 @@ app.post("/players", (req: any, res: any) => {
     const { name, age, email, games } = req.body;
     const player = addNewPlayer({ name, age, email, games }, playersRepository);
     res.json(player);
-  } catch (err) {
-    res.status(400).send(err);
+  } catch (err: any) {
+    res.status(400).send({ message: err.message });
   }
 });
 
@@ -42,8 +42,8 @@ app.post("/players/:id/addgame", (req: any, res: any) => {
     const game = req.body;
     const newPlayer = addGameToPlayer(game, id, playersRepository);
     res.send(newPlayer);
-  } catch (err) {
-    res.status(400).json(err);
+  } catch (err: any) {
+    res.status(400).json({ message: err.message });
   }
 });
 
@@ -53,8 +53,8 @@ app.put("/players/:email/removegame", (req: any, res: any) => {
     const game = req.body;
     const newPlayer = deleteGameFromPlayer(email, game, playersRepository);
     res.send(newPlayer);
-  } catch (err) {
-    res.status(404).json(err);
+  } catch (err: any) {
+    res.status(404).json({ message: err.message });
   }
 });
 
@@ -64,8 +64,8 @@ app.put("/players/:email/changename", (req: any, res: any) => {
     const name = req.body;
     const newPlayer = changePlayerName(email, name, playersRepository);
     res.send(newPlayer);
-  } catch (err) {
-    res.status(404).json(err);
+  } catch (err: any) {
+    res.status(404).json({ message: err.message });
   }
 });
 
@@ -76,8 +76,8 @@ app.delete("/players/:id/deleteplayer", (req: any, res: any) => {
     deletePlayer(id, playersRepository);
 
     res.send(playersRepository);
-  } catch (err) {
-    res.status(404).json(err);
+  } catch (err: any) {
+    res.status(404).json({ message: err.message });
   }
 });
 
