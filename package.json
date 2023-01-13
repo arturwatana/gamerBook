@@ -8,7 +8,7 @@
     "uuid": "^9.0.0",
     "vitest": "^0.27.1"
   },
-  "name": "gamerBook",
+  "name": "gamerbook",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -17,5 +17,5 @@
   },
   "author": "Artur Watanabe",
   "license": "ISC",
-  "description": "An API to social gamer media"
+  "description": "An API to social gamer network"
 }
