@@ -5,12 +5,11 @@ import { deleteGameFromPlayer } from "./src/useCases/Categories/Games/deleteGame
 import { searchById } from "./src/useCases/Categories/Player/searchById";
 import { changePlayerName } from "./src/useCases/Categories/Player/changePlayerName";
 import { deletePlayer } from "./src/useCases/Categories/Player/deletePlayer";
-const express = require("express");
 
+const express = require("express");
 const app = express();
 app.use(express.json());
 const port = 8080;
-
 const playersRepository: IPlayerRepository[] = [];
 
 app.get("/players", (req: any, res: any) => {

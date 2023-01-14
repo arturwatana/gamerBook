@@ -1,9 +1,9 @@
 import { IPlayerRepository } from "../../../Repository/IPlayerRepository";
 import { searchById } from "../Player/searchById";
-import { searchGame } from "./searchGame";
+import { gameType, searchGame } from "./searchGame";
 
 export function addGameToPlayer(
-  game: any,
+  game: gameType,
   id: string,
   playerRepository: IPlayerRepository[]
 ) {

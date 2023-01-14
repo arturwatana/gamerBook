@@ -1,9 +1,13 @@
 import { IPlayerRepository } from "../../../Repository/IPlayerRepository";
 import { searchPlayerByEmail } from "./searchPlayerByEmail";
 
+type newNameType = {
+  name: string;
+};
+
 export function changePlayerName(
   email: string,
-  newName: any,
+  newName: newNameType,
   playerRepository: IPlayerRepository[]
 ) {
   const player: any = searchPlayerByEmail(email, playerRepository);
