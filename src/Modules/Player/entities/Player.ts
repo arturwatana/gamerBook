@@ -1,25 +1,29 @@
 import { v4 as uuidv4 } from "uuid";
-import { gameType } from "../../useCases/Categories/Games/searchGame";
-import { validateInputs } from "../../useCases/Categories/Player/validateInputs";
+import { IGameRepository } from "../../../Repository/IGameRepository";
+import { validateInputs } from "../useCases/validateInputs";
 
 class Player {
   id?: string;
   name: string;
   age: number;
   email: string;
-  games: gameType[];
+  games: IGameRepository[];
 
-  constructor(name: string, age: number, email: string, games: gameType[]) {
+  constructor(
+    name: string,
+    age: number,
+    email: string,
+    games: IGameRepository[]
+  ) {
     if (!this.id) {
       this.id = uuidv4();
     }
-    let player = {
+    const player = {
       name,
       age,
       email,
       games,
     };
-
     validateInputs(player);
     this.name = player.name.toLowerCase();
     this.age = player.age;

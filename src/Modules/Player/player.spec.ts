@@ -1,5 +1,5 @@
 import { test, expect } from "vitest";
-import { Player } from "./Player";
+import { Player } from "../Player/entities/Player";
 
 test("Create a new instance player", () => {
   const player = new Player("John Doe", 25, "arturwatanabe@gmail.com", [

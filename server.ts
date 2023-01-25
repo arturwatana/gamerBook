@@ -1,16 +1,18 @@
 import { IPlayerRepository } from "./src/Repository/IPlayerRepository";
-import { addGameToPlayer } from "./src/useCases/Categories/Games/addGameToPlayer";
-import { addNewPlayer } from "./src/useCases/Categories/Player/addNewPlayer";
-import { deleteGameFromPlayer } from "./src/useCases/Categories/Games/deleteGameFromPlayer";
-import { searchById } from "./src/useCases/Categories/Player/searchById";
-import { changePlayerName } from "./src/useCases/Categories/Player/changePlayerName";
-import { deletePlayer } from "./src/useCases/Categories/Player/deletePlayer";
+import { addGameToPlayer } from "./src/Modules/Game/useCases/addGameToPlayer";
+import { addNewPlayer } from "./src/Modules/Player/useCases/addNewPlayer";
+import { deleteGameFromPlayer } from "./src/Modules/Game/useCases/deleteGameFromPlayer";
+import { searchById } from "./src/Modules/Player/useCases/searchById";
+import { changePlayerName } from "./src/Modules/Player/useCases/changePlayerName";
+import { deletePlayer } from "./src/Modules/Player/useCases/deletePlayer";
+import { IGameRepository } from "./src/Repository/IGameRepository";
 
 const express = require("express");
 const app = express();
 app.use(express.json());
 const port = 8080;
 const playersRepository: IPlayerRepository[] = [];
+const gamesRepository: IGameRepository[] = [];
 
 app.get("/players", (req: any, res: any) => {
   res.send(playersRepository);
@@ -71,9 +73,7 @@ app.put("/players/:email/changename", (req: any, res: any) => {
 app.delete("/players/:id/deleteplayer", (req: any, res: any) => {
   try {
     const { id } = req.params;
-
     deletePlayer(id, playersRepository);
-
     res.send(playersRepository);
   } catch (err: any) {
     res.status(404).json({ message: err.message });

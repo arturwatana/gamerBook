@@ -1,17 +1,15 @@
-import { Player } from "../../../Entities/Player/Player";
+import { Player } from "../../Player/entities/Player";
 import { IPlayerRepository } from "../../../Repository/IPlayerRepository";
-import { searchPlayerByEmail } from "../Player/searchPlayerByEmail";
-import { gameType, searchGame } from "./searchGame";
+import { IGameName } from "../../../Modules/Game/interfaces/gameName.interface";
+import { searchPlayerByEmail } from "../../Player/useCases/searchPlayerByEmail";
+import { searchGame } from "./searchGame";
 
 export function deleteGameFromPlayer(
   email: string,
-  gameName: gameType,
+  gameName: IGameName,
   playerRepository: IPlayerRepository[]
 ) {
-  const player: Player | undefined = searchPlayerByEmail(
-    email,
-    playerRepository
-  );
+  const player = searchPlayerByEmail(email, playerRepository);
   if (!player) throw new Error(`Player not found: ${email}`);
   const findedGame = searchGame(player, gameName);
   player.games.splice(findedGame, 1);
