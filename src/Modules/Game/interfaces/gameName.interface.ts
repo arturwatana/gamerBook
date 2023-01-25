@@ -1,3 +1,3 @@
-export type IGameName = {
+export interface IGameName {
   name: string;
-};
+}
