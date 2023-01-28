@@ -1,9 +1,8 @@
-import { IGameRepository } from "./IGameRepository";
+import { Player } from "../Modules/Player/entities/Player";
 
 export interface IPlayerRepository {
-  id?: string;
-  name: string;
-  age: number;
-  email: string;
-  games: IGameRepository[];
+  save(data: Player): void;
+  findByEmail(email: string): Promise<Player | undefined>;
+  findIndexById(id: string): number;
+  deletePlayer(player: number): Player;
 }

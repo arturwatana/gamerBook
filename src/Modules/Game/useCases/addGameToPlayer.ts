@@ -3,6 +3,7 @@ import { IPlayerRepository } from "../../../Repository/IPlayerRepository";
 import { IGameName } from "../../../Modules/Game/interfaces/gameName.interface";
 import { searchById } from "../../Player/useCases/searchById";
 import { searchGame } from "./searchGame";
+import { f } from "vitest/dist/index-1cfc7f58";
 
 export function addGameToPlayer(
   gameName: IGameName,

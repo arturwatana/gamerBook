@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { IGameRepository } from "../../../Repository/IGameRepository";
-import { validateInputs } from "../useCases/validateInputs";
+import { IPlayerFull } from "../interfaces/playerFull.interface";
 
 class Player {
   id?: string;
@@ -9,29 +9,25 @@ class Player {
   email: string;
   games: IGameRepository[];
 
-  constructor(
-    name: string,
-    age: number,
-    email: string,
-    games: IGameRepository[]
-  ) {
-    if (!this.id) {
-      this.id = uuidv4();
-    }
-    const player = {
-      name,
-      age,
-      email,
-      games,
-    };
-    validateInputs(player);
-    this.name = player.name.toLowerCase();
-    this.age = player.age;
-    this.email = player.email.toLowerCase();
-    this.games = player.games;
+  private constructor(props: IPlayerFull) {
+    this.id = uuidv4();
+    this.name = props.name.toLowerCase();
+    this.age = props.age;
+    this.email = props.email.toLowerCase();
+    this.games = props.games;
 
     if (!this.games) {
       this.games = [];
+    }
+  }
+
+  static create(props: Player) {
+    const player = new Player(props);
+    return player;
+  }
+  static validateInputs(props: IPlayerFull) {
+    if (!props.name || !props.age || !props.email) {
+      throw new Error("Invalid Player to create");
     }
   }
 }
