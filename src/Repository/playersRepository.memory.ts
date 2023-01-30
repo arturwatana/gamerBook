@@ -1,5 +1,5 @@
 import { Player } from "../Modules/Player/entities/Player";
-import { IPlayerRepository } from "./IPlayerRepository";
+import { IPlayerRepository } from "./interfaces/IPlayerRepository";
 
 export class PlayersRepositoryMemory implements IPlayerRepository {
   players: Player[];

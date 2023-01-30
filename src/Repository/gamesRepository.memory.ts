@@ -1,6 +1,5 @@
 import { Game } from "../Modules/Game/entities/Game";
-import { IGameRepository } from "./IGameRepository";
-import { IPlayerRepository } from "./IPlayerRepository";
+import { IGameRepository } from "./interfaces/IGameRepository";
 
 export class GameRepositoryMemory implements IGameRepository {
   games: Game[];
@@ -19,6 +18,7 @@ export class GameRepositoryMemory implements IGameRepository {
   }
 
   save(data: Game): Game {
+    data.name = data.name.toLowerCase();
     this.games.push(data);
     return data;
   }

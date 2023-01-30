@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { IGameRepository } from "../../../../Repository/IGameRepository";
-import { IPlayerRepository } from "../../../../Repository/IPlayerRepository";
+import { IGameRepository } from "../../../../Repository/interfaces/IGameRepository";
+import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 import { AddNewPlayerUseCases } from "./addNewPlayer.usecase";
 
 export class AddNewPlayerController {

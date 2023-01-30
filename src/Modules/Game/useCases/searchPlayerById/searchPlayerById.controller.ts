@@ -1,4 +1,4 @@
-import { IPlayerRepository } from "../../../../Repository/IPlayerRepository";
+import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 
 import { Request, Response } from "express";
 import { SearchPlayerByIdUseCase } from "./searchPlayerById.usecase";

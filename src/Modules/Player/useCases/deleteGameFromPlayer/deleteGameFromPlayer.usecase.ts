@@ -1,5 +1,5 @@
-import { IGameRepository } from "../../../../Repository/IGameRepository";
-import { IPlayerRepository } from "../../../../Repository/IPlayerRepository";
+import { IGameRepository } from "../../../../Repository/interfaces/IGameRepository";
+import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 
 export class DeleteGameFromPlayerUseCase {
   constructor(

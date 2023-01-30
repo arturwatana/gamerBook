@@ -1,7 +1,7 @@
-import { PlayersRepositoryMemory } from "../../../../Repository/playersRepository.memory";
+import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 
 export class ChangePlayerNameUseCase {
-  constructor(private playersRepository: PlayersRepositoryMemory) {}
+  constructor(private playersRepository: IPlayerRepository) {}
 
   async execute(email: string, newName: string) {
     const player: any = await this.playersRepository.findByEmail(email);

@@ -1,4 +1,4 @@
-import { IPlayerRepository } from "../../../../Repository/IPlayerRepository";
+import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 
 export class SearchPlayerByIdUseCase {
   constructor(private playersRepository: IPlayerRepository) {}

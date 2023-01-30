@@ -21,7 +21,7 @@ playerRouter.post("/players/addPlayer", async (req, res) => {
   await addNewPlayerController.handle(req, res);
 });
 
-playerRouter.post("/players/:id/addgame", (req, res) => {
+playerRouter.post("/players/:email/addgame", (req, res) => {
   addGameToPlayerController.handle(req, res);
 });
 

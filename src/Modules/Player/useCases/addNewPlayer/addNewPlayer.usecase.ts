@@ -1,8 +1,8 @@
 import { Game } from "../../../Game/entities/Game";
 import { Player } from "../../entities/Player";
-import { IPlayerRepository } from "../../../../Repository/IPlayerRepository";
+import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 import { IGame } from "../../../Game/interfaces/game.inteface";
-import { IGameRepository } from "../../../../Repository/IGameRepository";
+import { IGameRepository } from "../../../../Repository/interfaces/IGameRepository";
 
 type PlayerRequestType = {
   name: string;

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IPlayerRepository } from "../../../../Repository/IPlayerRepository";
+import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 import { DeletePlayerByIdUseCase } from "./deletePlayerById.usecase";
 
 export class DeletePlayerByIdController {
