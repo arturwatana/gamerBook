@@ -1,5 +1,4 @@
 import { Player } from "../Modules/Player/entities/Player";
-import { IGameRepository } from "./IGameRepository";
 import { IPlayerRepository } from "./IPlayerRepository";
 
 export class PlayersRepositoryMemory implements IPlayerRepository {
@@ -36,8 +35,12 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
   }
 
   deletePlayer(playerIndex: number) {
-    const player = this.players[playerIndex];
+    const findedPlayer = this.players[playerIndex];
     this.players.splice(playerIndex, 1);
-    return player;
+    return findedPlayer;
+  }
+  async searchById(id: string): Promise<Player | undefined> {
+    const findedPlayer = this.players.find((player) => player.id == id);
+    return findedPlayer;
   }
 }

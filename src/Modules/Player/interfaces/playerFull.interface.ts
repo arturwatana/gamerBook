@@ -1,9 +1,9 @@
-import { IGameRepository } from "../../../Repository/IGameRepository";
+import { IGame } from "../../Game/interfaces/game.inteface";
 
 export interface IPlayerFull {
   id?: string;
   name: string;
   age: number;
   email: string;
-  games: IGameRepository[];
+  games: IGame[];
 }

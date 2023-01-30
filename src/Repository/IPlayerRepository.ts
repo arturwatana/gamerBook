@@ -5,4 +5,5 @@ export interface IPlayerRepository {
   findByEmail(email: string): Promise<Player | undefined>;
   findIndexById(id: string): number;
   deletePlayer(player: number): Player;
+  searchById(id: string): Promise<Player | undefined>;
 }

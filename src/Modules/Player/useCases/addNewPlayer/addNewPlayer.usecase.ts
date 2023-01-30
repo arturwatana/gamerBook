@@ -1,16 +1,20 @@
 import { Game } from "../../../Game/entities/Game";
 import { Player } from "../../entities/Player";
 import { IPlayerRepository } from "../../../../Repository/IPlayerRepository";
+import { IGame } from "../../../Game/interfaces/game.inteface";
 import { IGameRepository } from "../../../../Repository/IGameRepository";
 
 type PlayerRequestType = {
   name: string;
   age: number;
   email: string;
-  games: IGameRepository[];
+  games: IGame[];
 };
 export class AddNewPlayerUseCases {
-  constructor(private playerRepository: IPlayerRepository) {}
+  constructor(
+    private playerRepository: IPlayerRepository,
+    private gameRepository: IGameRepository
+  ) {}
 
   async execute({ name, age, email, games }: PlayerRequestType) {
     Player.validateInputs({ name, age, email, games });
@@ -19,10 +23,20 @@ export class AddNewPlayerUseCases {
       throw new Error(`Player ${email} already exists`);
     }
     let numberOfGames = games.length;
+    games.forEach(async (game) => {
+      let gameAlreadyExists = await this.gameRepository.findGameByName(
+        game.name
+      );
 
-    games.forEach((game) => {
-      game = new Game(game);
-      games.push(game);
+      if (!gameAlreadyExists) {
+        game = Game.create(game);
+        game.players++;
+        games.push(game);
+        this.gameRepository.save(game);
+      } else {
+        gameAlreadyExists.players++;
+        games.push(gameAlreadyExists);
+      }
     });
     games.splice(0, numberOfGames);
     const player = Player.create({ name, age, email, games });

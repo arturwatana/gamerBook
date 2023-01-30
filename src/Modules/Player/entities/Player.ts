@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
-import { IGameRepository } from "../../../Repository/IGameRepository";
+import { IGame } from "../../Game/interfaces/game.inteface";
 import { IPlayerFull } from "../interfaces/playerFull.interface";
 
-class Player {
+export class Player {
   id?: string;
   name: string;
   age: number;
   email: string;
-  games: IGameRepository[];
+  games: IGame[];
 
   private constructor(props: IPlayerFull) {
     this.id = uuidv4();
@@ -31,5 +31,3 @@ class Player {
     }
   }
 }
-
-export { Player };

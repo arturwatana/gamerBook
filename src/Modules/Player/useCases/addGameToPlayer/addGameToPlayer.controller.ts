@@ -1,26 +1,27 @@
 import { Request, Response } from "express";
 import { IGameRepository } from "../../../../Repository/IGameRepository";
 import { IPlayerRepository } from "../../../../Repository/IPlayerRepository";
-import { AddNewPlayerUseCases } from "./addNewPlayer.usecase";
+import { AddGameToPlayerUseCase } from "./addGameToPlayer.usecase";
 
-export class AddNewPlayerController {
+export class AddGameToPlayerController {
   constructor(
     private playersRepository: IPlayerRepository,
     private gameRepository: IGameRepository
   ) {}
+
   async handle(req: Request, res: Response) {
     try {
-      const data = req.body;
-      const addNewPlayerUseCase = new AddNewPlayerUseCases(
+      const { name } = req.body;
+      const { id } = req.params;
+
+      const addGameToPlayerUseCase = new AddGameToPlayerUseCase(
         this.playersRepository,
         this.gameRepository
       );
-      const player = await addNewPlayerUseCase.execute(data);
+      const player = await addGameToPlayerUseCase.execute(name, id);
       res.json(player);
     } catch (err: any) {
-      res.status(401).json({
-        message: err.message,
-      });
+      res.status(400).json({ message: err.message });
     }
   }
 }
