@@ -8,6 +8,10 @@ export class ChangePlayerNameController {
     try {
       const { email } = req.params;
       const { name } = req.body;
+
+      if (!name || name.length <= 1) {
+        throw new Error("Please enter a valid name");
+      }
       const changePlayerNameUseCase = new ChangePlayerNameUseCase(
         this.playersRepository
       );

@@ -20,6 +20,6 @@ model Player {
   name String
   age Int
   email String @unique
-  games Game
+  games Game[]
 }
 

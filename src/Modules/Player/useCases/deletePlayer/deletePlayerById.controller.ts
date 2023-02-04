@@ -10,7 +10,7 @@ export class DeletePlayerByIdController {
       const deletePlayerByIdUseCase = new DeletePlayerByIdUseCase(
         this.playerRepository
       );
-      const deletedPlayer = deletePlayerByIdUseCase.execute(id);
+      const deletedPlayer = await deletePlayerByIdUseCase.execute(id);
       res.json(deletedPlayer);
     } catch (err: any) {
       res.status(401).json({

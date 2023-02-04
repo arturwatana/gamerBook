@@ -1,14 +1,16 @@
 import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
+import { Player } from "../../entities/Player";
 
 export class DeletePlayerByIdUseCase {
   constructor(private playersRepository: IPlayerRepository) {}
 
   async execute(id: string) {
-    const findedPlayerIndex = this.playersRepository.findIndexById(id);
-    if (findedPlayerIndex == -1) {
+    const idIsValid = Player.idIsValid(id);
+    if (!idIsValid) {
       throw new Error("Player not found by id: " + id);
     }
-    this.playersRepository.deletePlayer(findedPlayerIndex);
-    return findedPlayerIndex;
+    const player = await this.playersRepository.searchById(id);
+    const deletedPlayer = await this.playersRepository.deletePlayer(id);
+    return player;
   }
 }

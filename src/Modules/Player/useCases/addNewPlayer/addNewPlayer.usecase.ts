@@ -27,7 +27,6 @@ export class AddNewPlayerUseCases {
       let gameAlreadyExists = await this.gameRepository.findGameByName(
         game.name
       );
-
       if (!gameAlreadyExists) {
         game = Game.create(game);
         game.players++;
@@ -40,7 +39,8 @@ export class AddNewPlayerUseCases {
     });
     games.splice(0, numberOfGames);
     const player = Player.create({ name, age, email, games });
-    const playerCreated = this.playerRepository.save(player);
-    return playerCreated;
+    const playerSavedOnDB = this.playerRepository.save(player);
+
+    return player;
   }
 }

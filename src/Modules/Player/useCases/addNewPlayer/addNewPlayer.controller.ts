@@ -16,7 +16,10 @@ export class AddNewPlayerController {
         this.gameRepository
       );
       const player = await addNewPlayerUseCase.execute(data);
-      res.json(player);
+      res.json({
+        createdPlayer: player,
+        message: "Player created in database!",
+      });
     } catch (err: any) {
       res.status(401).json({
         message: err.message,
