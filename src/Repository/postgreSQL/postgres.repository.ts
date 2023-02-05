@@ -27,6 +27,7 @@ export class PlayersPostgreSQLRepository implements IPlayerRepository {
     return deletedPlayer;
   }
   async searchById(id: string): Promise<Player | undefined> {
+    //Comentario teste
     const findedUser = await client.query(
       `SELECT * FROM GAMER_BOOK.USERS WHERE id = '${id}'`
     );

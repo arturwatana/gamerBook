@@ -9,10 +9,6 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
   private constructor() {
     this.players = [];
   }
-  // changePlayerName(email: string, name: string): Promise<Player | undefined> {
-  //   throw new Error("Method not implemented.");
-  // }
-
   static getInstance() {
     if (!PlayersRepositoryMemory.instance) {
       PlayersRepositoryMemory.instance = new PlayersRepositoryMemory();
@@ -26,7 +22,6 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
   }
 
   async findByEmail(email: string): Promise<Player | undefined> {
-    
     const findedPlayer = this.players?.find(
       (player) => player.email.toLowerCase() == email.toLowerCase()
     );
@@ -45,7 +40,7 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
       this.players.splice(playerIndex, 1);
       return findedPlayer;
     }
-    
+
     return undefined;
   }
   async searchById(id: string): Promise<Player | undefined> {
