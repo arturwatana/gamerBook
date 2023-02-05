@@ -24,11 +24,15 @@ export class GameRepositoryMemory implements IGameRepository {
   }
 
   async findGameByName(gameName: string): Promise<Game | undefined> {
-    const findedGame = await this.games.find((game) => game.name == gameName);
+    const findedGame = await this.games.find((game) => {
+      return game.name.toLowerCase() == gameName.toLowerCase();
+    });
     return findedGame;
   }
   findGameByIndex(gameName: string): number {
     const findedGame = this.games.findIndex((game) => game.name == gameName);
     return findedGame;
   }
+
+  verifyIfGameAlreadyExists(): void {}
 }

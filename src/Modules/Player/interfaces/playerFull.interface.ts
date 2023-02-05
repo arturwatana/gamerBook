@@ -5,5 +5,6 @@ export interface IPlayerFull {
   name: string;
   age: number;
   email: string;
+  createdAt?: Date;
   games: IGame[];
 }

@@ -1,12 +1,19 @@
 import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
+import { Player } from "../../entities/Player";
 
 export class ChangePlayerNameUseCase {
   constructor(private playersRepository: IPlayerRepository) {}
 
   async execute(email: string, newName: string) {
-    const player: any = await this.playersRepository.findByEmail(email);
+    const player: Player | undefined = await this.playersRepository.findByEmail(
+      email
+    );
+
     if (!player) throw new Error(`Player not found: ${email}`);
-    player.name = newName;
-    return player;
+    const newPlayer = this.playersRepository.changePlayerName(
+      email.toLowerCase(),
+      newName.toLowerCase()
+    );
+    return newPlayer;
   }
 }

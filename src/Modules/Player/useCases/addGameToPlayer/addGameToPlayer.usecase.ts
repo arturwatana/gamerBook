@@ -16,9 +16,20 @@ export class AddGameToPlayerUseCase {
     const gameIntoPlayer = player.games.find(
       (game: Game) => game.name === name
     );
+
     if (gameIntoPlayer) {
       throw new Error("Game already exists on : " + player.name);
     }
+    const gameAlreadyExistsOnDB = await this.gameRepository.findGameByName(
+      name
+    );
+
+    if (gameAlreadyExistsOnDB) {
+      gameAlreadyExistsOnDB.players++;
+      player.games.push(gameAlreadyExistsOnDB);
+      return player;
+    }
+
     const game = Game.create({ name });
     game.players++;
     this.gameRepository.save(game);
