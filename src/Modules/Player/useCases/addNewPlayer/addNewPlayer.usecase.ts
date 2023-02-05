@@ -41,6 +41,6 @@ export class AddNewPlayerUseCases {
     const player = Player.create({ name, age, email, games });
     const playerSavedOnDB = this.playerRepository.save(player);
 
-    return player;
+    return playerSavedOnDB;
   }
 }

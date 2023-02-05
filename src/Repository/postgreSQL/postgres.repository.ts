@@ -7,7 +7,8 @@ export class PlayersPostgreSQLRepository implements IPlayerRepository {
     const insertUserTest = await client.query(
       `INSERT INTO GAMER_BOOK.USERS(NAME, AGE, EMAIL) VALUES('${name}', '${age}', '${email}')`
     );
-    return insertUserTest;
+    const createdUser = await this.findByEmail(email);
+    return createdUser;
   }
   async findByEmail(email: string): Promise<Player | undefined> {
     const formatedEmail = email.toLowerCase();
