@@ -6,7 +6,6 @@ test("Create a new instance player", () => {
     name: "John Doe",
     age: 25,
     email: "jdoe@example.com",
-    games: [{"Counter-Strike"}],
   });
 
   expect(player).toBeInstanceOf(Player);

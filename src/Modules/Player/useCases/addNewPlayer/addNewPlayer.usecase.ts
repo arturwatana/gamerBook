@@ -25,22 +25,30 @@ export class AddNewPlayerUseCases {
     let numberOfGames = games.length;
     games.forEach(async (game) => {
       let gameAlreadyExists = await this.gameRepository.findGameByName(
-        game.name
+        game.name.toLowerCase()
       );
       if (!gameAlreadyExists) {
         game = Game.create(game);
         game.players++;
+        let gameCreatedOnDB = await this.gameRepository.save(game);
+        game.id = gameCreatedOnDB.id;
+        game.createdAt = gameCreatedOnDB.createdAt;
         games.push(game);
-        this.gameRepository.save(game);
       } else {
-        gameAlreadyExists.players++;
+        game.players++;
         games.push(gameAlreadyExists);
       }
     });
     games.splice(0, numberOfGames);
     const player = Player.create({ name, age, email, games });
-    const playerSavedOnDB = this.playerRepository.save(player);
-
-    return playerSavedOnDB;
+    const playerSavedOnDB = await this.playerRepository.save(player);
+    if (playerSavedOnDB) {
+      playerSavedOnDB.games = player.games;
+      await this.playerRepository.vinculateGamesToPlayer(
+        playerSavedOnDB,
+        player.games
+      );
+      return playerSavedOnDB;
+    }
   }
 }

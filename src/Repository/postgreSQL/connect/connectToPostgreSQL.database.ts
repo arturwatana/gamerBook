@@ -12,7 +12,7 @@ export class ConnectToPostgreS {
   async connect() {
     try {
       await client.connect();
-      const res = await client.query("SELECT * FROM GAMER_BOOK.USERS");
+      const res = await client.query("SELECT * FROM GAMER_BOOK.PLAYERS");
       if (res) {
         console.log("Connected to postgreSQL on port: 5432");
       }

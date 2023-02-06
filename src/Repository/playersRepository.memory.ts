@@ -1,3 +1,4 @@
+import { Game } from "../Modules/Game/entities/Game";
 import { Player } from "../Modules/Player/entities/Player";
 import { IPlayerRepository } from "./interfaces/IPlayerRepository";
 
@@ -8,6 +9,12 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
 
   private constructor() {
     this.players = [];
+  }
+  vinculateGamesToPlayer(playerId: Player, games: []): Promise<Game[]> {
+    throw new Error("Method not implemented.");
+  }
+  showAllPlayers(): Promise<Player[]> {
+    throw new Error("Method not implemented.");
   }
   static getInstance() {
     if (!PlayersRepositoryMemory.instance) {

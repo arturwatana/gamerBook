@@ -3,8 +3,7 @@ require("dotenv").config();
 import { playerRouter } from "./routes/player.routes";
 import { gamesRouter } from "./routes/games.routes";
 import express from "express";
-import { ConnectToPostgreS } from "./Repository/postgreSQL/connectToPostgreSQL.database";
-import { InsertUserOnTestTable } from "./Repository/postgreSQL/insertUserOnTestTable";
+import { ConnectToPostgreS } from "./Repository/postgreSQL/connect/connectToPostgreSQL.database";
 
 const app = express();
 

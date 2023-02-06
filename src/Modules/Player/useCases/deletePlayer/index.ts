@@ -1,5 +1,5 @@
 import { PlayersRepositoryMemory } from "../../../../Repository/playersRepository.memory";
-import { PlayersPostgreSQLRepository } from "../../../../Repository/postgreSQL/postgres.repository";
+import { PlayersPostgreSQLRepository } from "../../../../Repository/postgreSQL/repositories/postgres.repository";
 import { DeletePlayerByIdController } from "./deletePlayerById.controller";
 
 const playersRepository = PlayersRepositoryMemory.getInstance();

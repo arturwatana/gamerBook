@@ -2,12 +2,15 @@ import { Game } from "../Modules/Game/entities/Game";
 import { IGameRepository } from "./interfaces/IGameRepository";
 
 export class GameRepositoryMemory implements IGameRepository {
-  games: Game[];
+  games?: Game[];
 
   private static instance: GameRepositoryMemory;
 
   private constructor() {
     this.games = [];
+  }
+  showAllGames(): Promise<Game[]> {
+    throw new Error("Method not implemented.");
   }
 
   static getInstance() {
@@ -17,22 +20,23 @@ export class GameRepositoryMemory implements IGameRepository {
     return GameRepositoryMemory.instance;
   }
 
-  save(data: Game): Game {
+  async save(data: Game): Promise<Game> {
     data.name = data.name.toLowerCase();
-    this.games.push(data);
+    this.games?.push(data);
     return data;
   }
 
   async findGameByName(gameName: string): Promise<Game | undefined> {
-    const findedGame = await this.games.find((game) => {
+    const findedGame = await this.games?.find((game) => {
       return game.name.toLowerCase() == gameName.toLowerCase();
     });
     return findedGame;
   }
   findGameByIndex(gameName: string): number {
-    const findedGame = this.games.findIndex((game) => game.name == gameName);
-    return findedGame;
+    if (this.games) {
+    }
+    return this.games
+      ? this.games.findIndex((game) => game.name == gameName)
+      : -1;
   }
-
-  verifyIfGameAlreadyExists(): void {}
 }
