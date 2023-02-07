@@ -5,7 +5,7 @@ import { addGameToPlayerController } from "../Modules/Player/useCases/addGameToP
 import { changePlayerNameController } from "../Modules/Player/useCases/changePlayerName/index";
 import { deleteGameFromPlayerController } from "../Modules/Player/useCases/deleteGameFromPlayer";
 import { deletePlayerByIdContoller } from "../Modules/Player/useCases/deletePlayer/index";
-import { PlayersPostgreSQLRepository } from "../Repository/postgreSQL/repositories/postgres.repository";
+import { PlayersPostgreSQLRepository } from "../Repository/postgreSQL/repositories/playerPostgres.repository";
 
 const playerRouter = Router();
 const postgreSQLRepository = new PlayersPostgreSQLRepository();

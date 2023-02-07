@@ -61,7 +61,6 @@ export class PlayersPostgreSQLRepository implements IPlayerRepository {
   ): Promise<Game[]> {
     let playerGames: Game[] = [];
     games.forEach(async (game: Game) => {
-      console.log(player.id);
       const playerGame = await client.query(
         `INSERT INTO GAMER_BOOK.PLAYERS_GAMES(ID_PLAYER, ID_GAME) VALUES('${player.id}', '${game.id}')`
       );
@@ -70,7 +69,6 @@ export class PlayersPostgreSQLRepository implements IPlayerRepository {
       );
       playerGames.push(gameInDB.rows[0]);
     });
-    console.log(playerGames);
     return playerGames;
   }
 }
