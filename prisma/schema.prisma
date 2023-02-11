@@ -20,6 +20,10 @@ model Player {
   name String
   age Int
   email String @unique
-  games Game[]
+}
+
+model Player_Games {
+  id String @id
+  player_id  Player @relation(fields: [Player], references: [id])
 }
 

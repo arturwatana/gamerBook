@@ -29,13 +29,11 @@ export class AddNewPlayerUseCases {
       );
       if (!gameAlreadyExists) {
         game = Game.create(game);
-        game.players++;
         let gameCreatedOnDB = await this.gameRepository.save(game);
         game.id = gameCreatedOnDB.id;
         game.createdAt = gameCreatedOnDB.createdAt;
         games.push(game);
       } else {
-        game.players++;
         games.push(gameAlreadyExists);
       }
     });
@@ -48,6 +46,7 @@ export class AddNewPlayerUseCases {
         playerSavedOnDB,
         player.games
       );
+
       return playerSavedOnDB;
     }
   }

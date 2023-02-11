@@ -6,8 +6,8 @@ import express from "express";
 import { ConnectToPostgreS } from "./Repository/postgreSQL/connect/connectToPostgreSQL.database";
 
 const app = express();
-
 const cors = require("cors");
+
 app.use(cors());
 app.use(express.json());
 
