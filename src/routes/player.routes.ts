@@ -5,20 +5,21 @@ import { addGameToPlayerController } from "../Modules/Player/useCases/addGameToP
 import { changePlayerNameController } from "../Modules/Player/useCases/changePlayerName/index";
 import { deleteGameFromPlayerController } from "../Modules/Player/useCases/deleteGameFromPlayer";
 import { deletePlayerByIdContoller } from "../Modules/Player/useCases/deletePlayer/index";
-import { PlayersRepositoryMemory } from "../Repository/playersRepository.memory";
+import { PlayersPostgreSQLRepository } from "../Repository/postgreSQL/repositories/playerPostgres.repository";
 
 const playerRouter = Router();
-const playersRepositoryMemory = PlayersRepositoryMemory.getInstance();
+const postgreSQLRepository = new PlayersPostgreSQLRepository();
 
-playerRouter.get("/players", (req, res) => {
-  res.send(playersRepositoryMemory.players);
+playerRouter.get("/players", async (req, res) => {
+  const players = await postgreSQLRepository.showAllPlayers();
+  res.send(players);
 });
 playerRouter.get("/players/:id", (req, res) => {
   searchPlayerByIdController.handle(req, res);
 });
 
-playerRouter.post("/players/addPlayer", async (req, res) => {
-  await addNewPlayerController.handle(req, res);
+playerRouter.post("/players/addPlayer", (req, res) => {
+  addNewPlayerController.handle(req, res);
 });
 
 playerRouter.post("/players/:email/addgame", (req, res) => {

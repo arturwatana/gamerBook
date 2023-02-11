@@ -1,8 +1,8 @@
 import { Game } from "../../Modules/Game/entities/Game";
 
 export interface IGameRepository {
-  save(data: Game): Game;
+  save(data: Game): Promise<Game>;
   findGameByName(gameName: string): Promise<Game | undefined>;
   findGameByIndex(gameName: string): number;
-  verifyIfGameAlreadyExists(): void;
+  showAllGames(): Promise<Game[]>;
 }

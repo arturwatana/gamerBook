@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { IGameName } from "../interfaces/gameName.interface";
 
 export class Game {
@@ -8,7 +7,7 @@ export class Game {
   createdAt: Date;
 
   private constructor({ name }: IGameName) {
-    if (!this.id) this.id = uuidv4();
+    this.id = "";
     this.name = name;
     this.players = 0;
     this.createdAt = new Date();

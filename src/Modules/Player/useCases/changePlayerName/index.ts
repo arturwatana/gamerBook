@@ -1,5 +1,5 @@
 import { PlayersRepositoryMemory } from "../../../../Repository/playersRepository.memory";
-import { PlayersPostgreSQLRepository } from "../../../../Repository/postgreSQL/postgres.repository";
+import { PlayersPostgreSQLRepository } from "../../../../Repository/postgreSQL/repositories/playerPostgres.repository";
 import { ChangePlayerNameController } from "./changePlayerName.controller";
 
 const playersRepositoryMemory = PlayersRepositoryMemory.getInstance();

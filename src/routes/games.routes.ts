@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { addGameToDataBaseController } from "../Modules/Game/useCases/addGameToDatabase";
-import { GameRepositoryMemory } from "../Repository/gamesRepository.memory";
+import { GamePostgreSQLRepository } from "../Repository/postgreSQL/repositories/gamePostgres.repository";
 
 const gamesRouter = Router();
-const gamesRepository = GameRepositoryMemory.getInstance();
+const gamesPostgreSQLRepository = new GamePostgreSQLRepository();
 
-gamesRouter.get("/games", (req, res) => {
-  res.send(gamesRepository.games);
+gamesRouter.get("/games", async (req, res) => {
+  const games = await gamesPostgreSQLRepository.showAllGames();
+  res.send(games);
 });
 
 gamesRouter.post("/games/addgame", (req, res) => {

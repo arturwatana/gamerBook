@@ -1,14 +1,12 @@
-import { GameRepositoryMemory } from "../../../../Repository/gamesRepository.memory";
-import { PlayersRepositoryMemory } from "../../../../Repository/playersRepository.memory";
-import { PlayersPostgreSQLRepository } from "../../../../Repository/postgreSQL/postgres.repository";
+import { GamePostgreSQLRepository } from "../../../../Repository/postgreSQL/repositories/gamePostgres.repository";
+import { PlayersPostgreSQLRepository } from "../../../../Repository/postgreSQL/repositories/playerPostgres.repository";
 import { AddNewPlayerController } from "./addNewPlayer.controller";
 
-const playersRepositoryMemory = PlayersRepositoryMemory.getInstance();
 const playersPostgreSQLRepository = new PlayersPostgreSQLRepository();
-const gameRepositoryMemory = GameRepositoryMemory.getInstance();
+const gamePostgreSQLRepository = new GamePostgreSQLRepository();
 const addNewPlayerController = new AddNewPlayerController(
   playersPostgreSQLRepository,
-  gameRepositoryMemory
+  gamePostgreSQLRepository
 );
 
 export { addNewPlayerController };

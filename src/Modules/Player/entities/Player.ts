@@ -17,10 +17,6 @@ export class Player {
     this.email = props.email.toLowerCase();
     this.createdAt = new Date();
     this.games = props.games;
-
-    if (!this.games) {
-      this.games = [];
-    }
   }
 
   static create(props: Player) {
