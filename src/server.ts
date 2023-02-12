@@ -1,5 +1,6 @@
-require("dotenv").config();
-
+import dotenv from "dotenv";
+dotenv.config();
+import "reflect-metadata";
 import { playerRouter } from "./routes/player.routes";
 import { gamesRouter } from "./routes/games.routes";
 import express from "express";
