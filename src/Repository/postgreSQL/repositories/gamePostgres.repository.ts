@@ -19,7 +19,9 @@ export class GamePostgreSQLRepository implements IGameRepository {
     const findedGameOnDB = await client.query(
       `SELECT * FROM GAMER_BOOK.GAMES WHERE NAME = '${gameName}'`
     );
-    return findedGameOnDB.rows[0];
+    const game =
+      findedGameOnDB.rows.length === 0 ? undefined : findedGameOnDB.rows[0];
+    return game;
   }
   findGameByIndex(gameName: string): number {
     throw new Error("Method not implemented.");

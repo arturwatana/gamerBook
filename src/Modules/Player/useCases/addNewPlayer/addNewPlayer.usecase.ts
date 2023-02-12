@@ -22,29 +22,29 @@ export class AddNewPlayerUseCases {
     if (playerAlreadyExists) {
       throw new Error(`Player ${email} already exists`);
     }
-    let numberOfGames = games.length;
-    games.forEach(async (game) => {
-      let gameAlreadyExists = await this.gameRepository.findGameByName(
-        game.name.toLowerCase()
+    let playerGames: IGame[] = [];
+
+    for (let i = 0; i < games.length; i++) {
+      let dbGame = await this.gameRepository.findGameByName(
+        games[i].name.toLowerCase()
       );
-      if (!gameAlreadyExists) {
-        game = Game.create(game);
-        let gameCreatedOnDB = await this.gameRepository.save(game);
-        game.id = gameCreatedOnDB.id;
-        game.createdAt = gameCreatedOnDB.createdAt;
-        games.push(game);
+      if (!dbGame) {
+        games[i] = Game.create(games[i]);
+        let gameCreatedOnDB = await this.gameRepository.save(games[i]);
+        games[i].id = gameCreatedOnDB.id;
+        games[i].createdAt = new Date();
+        playerGames.push(games[i]);
       } else {
-        games.push(gameAlreadyExists);
+        playerGames.push(dbGame);
       }
-    });
-    games.splice(0, numberOfGames);
-    const player = Player.create({ name, age, email, games });
+    }
+    const player = Player.create({ name, age, email, games: playerGames });
     const playerSavedOnDB = await this.playerRepository.save(player);
     if (playerSavedOnDB) {
       playerSavedOnDB.games = player.games;
       await this.playerRepository.vinculateGamesToPlayer(
         playerSavedOnDB,
-        player.games
+        playerSavedOnDB.games
       );
 
       return playerSavedOnDB;

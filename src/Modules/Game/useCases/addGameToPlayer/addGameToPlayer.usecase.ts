@@ -1,6 +1,6 @@
 import { IGameRepository } from "../../../../Repository/interfaces/IGameRepository";
 import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
-import { Game } from "../../../Game/entities/Game";
+import { Game } from "../../entities/Game";
 
 export class AddGameToPlayerUseCase {
   constructor(

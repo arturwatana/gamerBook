@@ -61,7 +61,7 @@ export class PlayersPostgreSQLRepository implements IPlayerRepository {
   ): Promise<Game[]> {
     let playerGames: Game[] = [];
     games.forEach(async (game: Game) => {
-      const playerGame = await client.query(
+      await client.query(
         `INSERT INTO GAMER_BOOK.PLAYERS_GAMES(ID_PLAYER, ID_GAME) VALUES('${player.id}', '${game.id}')`
       );
       const gameInDB = await client.query(
