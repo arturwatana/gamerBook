@@ -13,7 +13,7 @@ export class DeleteGameFromPlayerUseCase {
     if (!findedGame) throw new Error(`Game not found: ${gameName}`);
     const findedGameIndex = this.gameRepository.findGameByIndex(gameName);
     findedGame.players--;
-    player.games.splice(findedGameIndex, 1);
+    // player.games.splice(findedGameIndex, 1);
 
     return player;
   }

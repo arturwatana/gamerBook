@@ -1,6 +1,6 @@
-import { Game } from "../Modules/Game/entities/Game";
-import { Player } from "../Modules/Player/entities/Player";
-import { IPlayerRepository } from "./interfaces/IPlayerRepository";
+import { Game } from "../../Modules/Game/entities/Game";
+import { Player } from "../../Modules/Player/entities/Player";
+import { IPlayerRepository } from "../interfaces/IPlayerRepository";
 
 export class PlayersRepositoryMemory implements IPlayerRepository {
   players?: Player[];
@@ -23,16 +23,19 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
     return PlayersRepositoryMemory.instance;
   }
 
-  async save(data: Player): Promise<Player | undefined> {
+  async save(data: Player): Promise<Player> {
     this.players?.push(data);
     return data;
   }
 
-  async findByEmail(email: string): Promise<Player | undefined> {
+  async findByEmail(email: string): Promise<Player | null> {
     const findedPlayer = this.players?.find(
       (player) => player.email.toLowerCase() == email.toLowerCase()
     );
-    return findedPlayer;
+    if (findedPlayer) {
+      return findedPlayer;
+    }
+    return null;
   }
 
   findIndexById(id: string) {
@@ -40,7 +43,7 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
     return findedPlayer ?? -1;
   }
 
-  async deletePlayer(id: string): Promise<Player | undefined> {
+  async deletePlayer(id: string): Promise<Player | null> {
     const playerIndex = this.findIndexById(id);
     if (this.players) {
       const findedPlayer = this.players[playerIndex];
@@ -48,14 +51,17 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
       return findedPlayer;
     }
 
-    return undefined;
+    return null;
   }
-  async searchById(id: string): Promise<Player | undefined> {
+  async searchById(id: string): Promise<Player | null> {
     const findedPlayer = this.players?.find((player) => player.id == id);
-    return findedPlayer;
+    if (findedPlayer) {
+      return findedPlayer;
+    }
+    return null;
   }
 
-  changePlayerName(email: string, name: string): Promise<Player | undefined> {
+  changePlayerName(email: string, name: string): Promise<Player | null> {
     throw new Error("Method not implemented.");
   }
 }

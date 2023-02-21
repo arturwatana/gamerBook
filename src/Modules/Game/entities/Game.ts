@@ -1,13 +1,14 @@
+import { randomUUID } from "crypto";
 import { IGameName } from "../interfaces/gameName.interface";
 
 export class Game {
-  id?: string;
+  id: string;
   name: string;
   players: number;
-  createdAt: Date;
+  createdAt?: Date;
 
   private constructor({ name }: IGameName) {
-    this.id = "";
+    this.id = randomUUID();
     this.name = name;
     this.players = 0;
     this.createdAt = new Date();

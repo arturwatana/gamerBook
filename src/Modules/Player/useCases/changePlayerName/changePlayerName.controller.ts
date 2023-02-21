@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { PlayersRepositoryMemory } from "../../../../Repository/playersRepository.memory";
+import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 import { ChangePlayerNameUseCase } from "./changePlayerName.usecase";
 
 export class ChangePlayerNameController {
-  constructor(private playersRepository: PlayersRepositoryMemory) {}
+  constructor(private playersRepository: IPlayerRepository) {}
   async handle(req: Request, res: Response) {
     try {
       const { email } = req.params;

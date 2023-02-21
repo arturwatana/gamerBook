@@ -6,12 +6,14 @@ import { changePlayerNameController } from "../Modules/Player/useCases/changePla
 import { deleteGameFromPlayerController } from "../Modules/Game/useCases/deleteGameFromPlayer/index";
 import { deletePlayerByIdContoller } from "../Modules/Player/useCases/deletePlayer/index";
 import { PlayersPostgreSQLRepository } from "../Repository/postgreSQL/repositories/playerPostgres.repository";
+import { PlayersPrismaRepository } from "../Repository/prisma/playersRepository.prisma";
 
 const playerRouter = Router();
 const postgreSQLRepository = new PlayersPostgreSQLRepository();
+const playersPrismaRepository = new PlayersPrismaRepository();
 
 playerRouter.get("/players", async (req, res) => {
-  const players = await postgreSQLRepository.showAllPlayers();
+  const players = await playersPrismaRepository.showAllPlayers();
   res.send(players);
 });
 playerRouter.get("/players/:id", (req, res) => {

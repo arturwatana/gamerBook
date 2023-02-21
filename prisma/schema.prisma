@@ -11,19 +11,32 @@ datasource db {
 }
 model Game {
   id String @id
-  name String
+  name String @unique
   players Int
+  player_games Player_Games[]
+  createdAt DateTime @default(now())
+@@map("games")
 }
 
 model Player {
-  id String @id 
+  id String @id
   name String
   age Int
+  password String
   email String @unique
+  player_games Player_Games[]
+  created_At DateTime @default(now())
+
+@@map("player")
 }
 
 model Player_Games {
   id String @id
-  player_id  Player @relation(fields: [Player], references: [id])
+  player  Player @relation(fields: [player_id], references: [id])
+  player_id String 
+  game Game @relation(fields: [game_id], references: [id])
+  game_id String
+
+  @@map("player_games") 
 }
 

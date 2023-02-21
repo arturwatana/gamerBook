@@ -1,5 +1,5 @@
-import { GameRepositoryMemory } from "../../../../Repository/gamesRepository.memory";
-import { PlayersRepositoryMemory } from "../../../../Repository/playersRepository.memory";
+import { GameRepositoryMemory } from "../../../../Repository/InMemory/gamesRepository.memory";
+import { PlayersRepositoryMemory } from "../../../../Repository/InMemory/playersRepository.memory";
 import { AddGameToPlayerController } from "./addGameToPlayer.controller";
 
 const playersRepository = PlayersRepositoryMemory.getInstance();

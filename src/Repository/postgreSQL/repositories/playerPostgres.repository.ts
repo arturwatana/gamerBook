@@ -11,14 +11,14 @@ export class PlayersPostgreSQLRepository implements IPlayerRepository {
     const players = await client.query(`SELECT * FROM GAMER_BOOK.PLAYERS`);
     return players.rows;
   }
-  async save({ name, age, email }: Player): Promise<Player | undefined> {
+  async save({ name, age, email }: Player): Promise<Player> {
     const insertUserTest = await client.query(
       `INSERT INTO GAMER_BOOK.PLAYERS(NAME, AGE, EMAIL) VALUES('${name}', '${age}', '${email}')`
     );
     const createdUser = await this.findByEmail(email);
     return createdUser;
   }
-  async findByEmail(email: string): Promise<Player | undefined> {
+  async findByEmail(email: string): Promise<Player> {
     const formatedEmail = email.toLowerCase();
     const findedUser = await client.query(
       `SELECT * FROM GAMER_BOOK.PLAYERS WHERE EMAIL = '${formatedEmail}' LIMIT 1`
@@ -35,17 +35,14 @@ export class PlayersPostgreSQLRepository implements IPlayerRepository {
     );
     return deletedPlayer;
   }
-  async searchById(id: string): Promise<Player | undefined> {
+  async searchById(id: string): Promise<Player | null> {
     const findedUser = await client.query(
       `SELECT * FROM GAMER_BOOK.PLAYERS WHERE id = '${id}'`
     );
     return findedUser.rows;
   }
 
-  async changePlayerName(
-    email: string,
-    name: string
-  ): Promise<Player | undefined> {
+  async changePlayerName(email: string, name: string): Promise<Player | null> {
     await client.query(
       `UPDATE GAMER_BOOK.PLAYERS SET NAME = '${name}' WHERE EMAIL = '${email}'`
     );
@@ -56,7 +53,7 @@ export class PlayersPostgreSQLRepository implements IPlayerRepository {
   }
 
   async vinculateGamesToPlayer(
-    player: IPlayerFull,
+    player: Player,
     games: IGame[]
   ): Promise<Game[]> {
     let playerGames: Game[] = [];

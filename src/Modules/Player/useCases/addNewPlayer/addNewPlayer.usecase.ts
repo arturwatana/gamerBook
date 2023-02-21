@@ -3,51 +3,53 @@ import { Player } from "../../entities/Player";
 import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 import { IGame } from "../../../Game/interfaces/game.inteface";
 import { IGameRepository } from "../../../../Repository/interfaces/IGameRepository";
+import { IPlayerGamesRepository } from "../../../../Repository/interfaces/IPlayerGamesRepository";
 
 type PlayerRequestType = {
   name: string;
   age: number;
   email: string;
+  password: string;
   games: IGame[];
 };
 export class AddNewPlayerUseCases {
   constructor(
     private playerRepository: IPlayerRepository,
-    private gameRepository: IGameRepository
+    private gameRepository: IGameRepository,
+    private playerGamesRepository: IPlayerGamesRepository
   ) {}
 
-  async execute({ name, age, email, games }: PlayerRequestType) {
-    Player.validateInputs({ name, age, email, games });
+  async execute({ name, age, password, email, games }: PlayerRequestType) {
     const playerAlreadyExists = await this.playerRepository.findByEmail(email);
     if (playerAlreadyExists) {
       throw new Error(`Player ${email} already exists`);
     }
-    let playerGames: IGame[] = [];
-
-    for (let i = 0; i < games.length; i++) {
-      let dbGame = await this.gameRepository.findGameByName(
-        games[i].name.toLowerCase()
-      );
-      if (!dbGame) {
-        games[i] = Game.create(games[i]);
-        let gameCreatedOnDB = await this.gameRepository.save(games[i]);
-        games[i].id = gameCreatedOnDB.id;
-        games[i].createdAt = new Date();
-        playerGames.push(games[i]);
-      } else {
-        playerGames.push(dbGame);
-      }
-    }
-    const player = Player.create({ name, age, email, games: playerGames });
+    let playerGames: Game[] = [];
+    const player = Player.create({ id: "", name, age, password, email });
     const playerSavedOnDB = await this.playerRepository.save(player);
-    if (playerSavedOnDB) {
-      playerSavedOnDB.games = player.games;
-      await this.playerRepository.vinculateGamesToPlayer(
-        playerSavedOnDB,
-        playerSavedOnDB.games
-      );
+    console.log(games);
 
-      return playerSavedOnDB;
+    if (games) {
+      games.map(async (game) => {
+        const createGame = Game.create(game);
+        const gameAlreadyExists = await this.gameRepository.findGameByName(
+          createGame.name
+        );
+        if (gameAlreadyExists) {
+          player.games?.push(gameAlreadyExists);
+          return;
+        }
+        const gameCreatedInDB = await this.gameRepository.save(createGame);
+        player.games?.push(gameCreatedInDB);
+      });
     }
+    const vinculateGamesToPlayer =
+      await this.playerGamesRepository.vinculateGamesToPlayer(
+        playerSavedOnDB,
+        playerGames
+      );
+    console.log(vinculateGamesToPlayer);
+    playerSavedOnDB.games = vinculateGamesToPlayer;
+    return playerSavedOnDB;
   }
 }

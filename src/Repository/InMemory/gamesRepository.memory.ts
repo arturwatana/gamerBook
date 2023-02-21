@@ -1,5 +1,5 @@
-import { Game } from "../Modules/Game/entities/Game";
-import { IGameRepository } from "./interfaces/IGameRepository";
+import { Game } from "../../Modules/Game/entities/Game";
+import { IGameRepository } from "../interfaces/IGameRepository";
 
 export class GameRepositoryMemory implements IGameRepository {
   games?: Game[];

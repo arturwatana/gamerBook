@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { GameRepositoryMemory } from "../../../../Repository/gamesRepository.memory";
+import { IGameRepository } from "../../../../Repository/interfaces/IGameRepository";
 import { AddGameToDataBaseUseCase } from "./addGameToDatabase.usecase";
 
 export class AddGameToDataBaseController {
-  constructor(private gamesRepository: GameRepositoryMemory) {}
+  constructor(private gamesRepository: IGameRepository) {}
   async handle(req: Request, res: Response) {
     try {
       const { name } = req.body;

@@ -5,7 +5,7 @@ export class ChangePlayerNameUseCase {
   constructor(private playersRepository: IPlayerRepository) {}
 
   async execute(email: string, newName: string) {
-    const player: Player | undefined = await this.playersRepository.findByEmail(
+    const player: Player | null = await this.playersRepository.findByEmail(
       email
     );
 
