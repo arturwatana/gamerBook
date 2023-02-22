@@ -10,8 +10,7 @@ export class Player {
   age: number;
   password: string;
   email: string;
-  createdAt?: Date;
-  games?: IGame[];
+  created_At: Date;
 
   private constructor(props: IPlayerFull) {
     this.id = uuidv4();
@@ -19,11 +18,10 @@ export class Player {
     this.age = props.age;
     this.password = props.password;
     this.email = props.email.toLowerCase();
-    this.createdAt = new Date();
-    this.games = [];
+    this.created_At = new Date();
   }
 
-  static create(props: Player) {
+  static create(props: IPlayerFull) {
     const player = new Player(props);
     return player;
   }

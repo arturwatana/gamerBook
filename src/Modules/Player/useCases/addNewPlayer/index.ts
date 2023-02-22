@@ -6,10 +6,12 @@ import { PlayersPrismaRepository } from "../../../../Repository/prisma/playersRe
 import { AddNewPlayerController } from "./addNewPlayer.controller";
 
 const playersPostgreSQLRepository = new PlayersPostgreSQLRepository();
-const playersPrismaRepository = new PlayersPrismaRepository();
 const gamePostgreSQLRepository = new GamePostgreSQLRepository();
+
+const playersPrismaRepository = new PlayersPrismaRepository();
 const gamesPrismaRepository = new GamesPrismaRepository();
 const playersGamesPrismaRepository = new PlayerGamesPrismaRepository();
+
 const addNewPlayerController = new AddNewPlayerController(
   playersPrismaRepository,
   gamesPrismaRepository,

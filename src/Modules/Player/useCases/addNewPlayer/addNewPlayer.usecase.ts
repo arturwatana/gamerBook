@@ -25,31 +25,56 @@ export class AddNewPlayerUseCases {
       throw new Error(`Player ${email} already exists`);
     }
     let playerGames: Game[] = [];
-    const player = Player.create({ id: "", name, age, password, email });
-    const playerSavedOnDB = await this.playerRepository.save(player);
-    console.log(games);
-
-    if (games) {
-      games.map(async (game) => {
-        const createGame = Game.create(game);
-        const gameAlreadyExists = await this.gameRepository.findGameByName(
-          createGame.name
-        );
-        if (gameAlreadyExists) {
-          player.games?.push(gameAlreadyExists);
-          return;
-        }
-        const gameCreatedInDB = await this.gameRepository.save(createGame);
-        player.games?.push(gameCreatedInDB);
-      });
+    for (let i = 0; i <= games.length; i++) {
+      let dbGame = await this.gameRepository.findGameByName(games[i].name);
+      if (!dbGame) {
+        games[i] = Game.create(games[i]);
+        let gameCreatedOnDB = await this.gameRepository.save(games[i]);
+        games[i].id = gameCreatedOnDB.id;
+        games[i].createdAt = gameCreatedOnDB.createdAt;
+        playerGames.push(games[i]);
+      } else {
+        playerGames.push(dbGame);
+      }
     }
+    console.log(playerGames);
+
+    const player = Player.create({
+      name,
+      age,
+      password,
+      email,
+    });
+    const playerSavedOnDB = await this.playerRepository.save(player);
+    if (!games) {
+      return playerSavedOnDB;
+    }
+    // games.map(async (game) => {
+    //   const createGame = Game.create(game);
+    //   const gameAlreadyExists = await this.gameRepository.findGameByName(
+    //     createGame.name
+    //   );
+    //   console.log(gameAlreadyExists);
+    //   if (gameAlreadyExists) {
+    //     playerGames.push(gameAlreadyExists);
+    //     return;
+    //   }
+    //   const gameCreatedInDB = await this.gameRepository.save(createGame);
+    //   playerGames.push(gameCreatedInDB);
+    // });
+    console.log(playerGames);
     const vinculateGamesToPlayer =
       await this.playerGamesRepository.vinculateGamesToPlayer(
         playerSavedOnDB,
         playerGames
       );
     console.log(vinculateGamesToPlayer);
-    playerSavedOnDB.games = vinculateGamesToPlayer;
-    return playerSavedOnDB;
+
+    const createdPlayer = {
+      playerSavedOnDB,
+      playerGames,
+    };
+
+    return createdPlayer;
   }
 }

@@ -5,7 +5,7 @@ export class Game {
   id: string;
   name: string;
   players: number;
-  createdAt?: Date;
+  createdAt: Date;
 
   private constructor({ name }: IGameName) {
     this.id = randomUUID();

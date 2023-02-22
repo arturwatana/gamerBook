@@ -6,7 +6,7 @@ import { prismaClient } from "./prisma.config";
 
 export class PlayersPrismaRepository implements IPlayerRepository {
   async save(data: Player): Promise<Player> {
-    const playerCreated = await prismaClient.player.create({
+    const createdPlayer = await prismaClient.player.create({
       data: {
         id: data.id,
         name: data.name,
@@ -15,7 +15,7 @@ export class PlayersPrismaRepository implements IPlayerRepository {
         email: data.email,
       },
     });
-    return playerCreated;
+    return createdPlayer;
   }
   async findByEmail(email: string): Promise<Player | null> {
     const findedPlayer = await prismaClient.player.findUnique({

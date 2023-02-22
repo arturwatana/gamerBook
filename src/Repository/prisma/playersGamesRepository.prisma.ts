@@ -11,7 +11,6 @@ export class PlayerGamesPrismaRepository implements IPlayerGamesRepository {
     games: IGame[]
   ): Promise<IGame[]> {
     const gamesCreated: Game[] = [];
-    console.log(games);
     if (props) {
       games.map(async (game) => {
         const playerGame = PlayerGame.create(props.id, game.id);
