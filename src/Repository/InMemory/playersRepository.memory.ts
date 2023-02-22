@@ -3,18 +3,15 @@ import { Player } from "../../Modules/Player/entities/Player";
 import { IPlayerRepository } from "../interfaces/IPlayerRepository";
 
 export class PlayersRepositoryMemory implements IPlayerRepository {
-  players?: Player[];
+  players: Player[];
 
   private static instance: PlayersRepositoryMemory;
 
   private constructor() {
     this.players = [];
   }
-  vinculateGamesToPlayer(playerId: Player, games: []): Promise<Game[]> {
-    throw new Error("Method not implemented.");
-  }
-  showAllPlayers(): Promise<Player[]> {
-    throw new Error("Method not implemented.");
+  async showAllPlayers(): Promise<Player[]> {
+    return this.players;
   }
   static getInstance() {
     if (!PlayersRepositoryMemory.instance) {
@@ -61,7 +58,13 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
     return null;
   }
 
-  changePlayerName(email: string, name: string): Promise<Player | null> {
-    throw new Error("Method not implemented.");
+  async changePlayerName(email: string, name: string): Promise<Player | null> {
+    const findedPlayer = this.players.find((player) => player.email === email);
+    if (findedPlayer) {
+      findedPlayer.name = name;
+      return findedPlayer;
+    } else {
+      return null;
+    }
   }
 }

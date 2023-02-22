@@ -26,9 +26,7 @@ export class PlayersPostgreSQLRepository implements IPlayerRepository {
 
     return findedUser.rows[0];
   }
-  findIndexById(id: string): number {
-    throw new Error("Method not implemented.");
-  }
+
   async deletePlayer(id: string): Promise<Player> {
     const deletedPlayer = await client.query(
       `DELETE FROM GAMER_BOOK.PLAYERS WHERE ID = '${id}'`

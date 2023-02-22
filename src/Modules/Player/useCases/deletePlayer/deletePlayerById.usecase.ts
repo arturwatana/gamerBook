@@ -1,8 +1,12 @@
+import { IPlayerGamesRepository } from "../../../../Repository/interfaces/IPlayerGamesRepository";
 import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
 import { Player } from "../../entities/Player";
 
 export class DeletePlayerByIdUseCase {
-  constructor(private playersRepository: IPlayerRepository) {}
+  constructor(
+    private playersRepository: IPlayerRepository,
+    private playerGamesRepository: IPlayerGamesRepository
+  ) {}
 
   async execute(id: string) {
     const idIsValid = Player.idIsValid(id);
@@ -10,7 +14,12 @@ export class DeletePlayerByIdUseCase {
       throw new Error("Player not found by id: " + id);
     }
     const player = await this.playersRepository.searchById(id);
+    if (!player) {
+      throw new Error("Player not found by id: " + id);
+    }
+    await this.playerGamesRepository.deleteVinculatedGamesFromPlayer(player.id);
     const deletedPlayer = await this.playersRepository.deletePlayer(id);
-    return player;
+    console.log(deletedPlayer);
+    return deletedPlayer;
   }
 }

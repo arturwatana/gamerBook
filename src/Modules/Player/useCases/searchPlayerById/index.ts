@@ -3,6 +3,7 @@ import { PlayersPrismaRepository } from "../../../../Repository/prisma/playersRe
 import { SearchPlayerByIdController } from "./searchPlayerById.controller";
 
 const playersRepository = PlayersRepositoryMemory.getInstance();
+
 const playersPrismaRepository = new PlayersPrismaRepository();
 const searchPlayerByIdController = new SearchPlayerByIdController(
   playersPrismaRepository

@@ -1,6 +1,6 @@
 # GamerBook
 
-Esta API é um projeto para criar um sistema de cadastro de jogadores e jogos. As funcionalidades implementadas incluem cadastrar jogadores, verificação de e-mail único, buscar jogadores pelo e-mail e excluir jogadores. Além disso, também foi implementado o cadastro de jogos, podendo adicionar ou remover um jogo associado a um jogador e não pode haver um jogo com o nome duplicado.
+Esta API é um projeto para criar um sistema de cadastro de jogadores e jogos. As funcionalidades implementadas incluem cadastrar jogadores, verificação de e-mail único, buscar jogadores pelo e-mail e excluir jogadores. Além disso, também foi implementado o cadastro de jogos, não sendo possível cadastrar um jogo com o mesmo nome e podendo adicionar ou remover um jogo de um jogador.
 
 <br>
 
@@ -13,7 +13,7 @@ Esta API é um projeto para criar um sistema de cadastro de jogadores e jogos. A
 - Typescript
 - PostgreSQL
 - Docker
-- Prisma ORM (Em progresso)
+- Prisma ORM
 - SOLID
 
 <br>

@@ -8,7 +8,6 @@ export class ChangePlayerNameUseCase {
     const player: Player | null = await this.playersRepository.findByEmail(
       email
     );
-
     if (!player) throw new Error(`Player not found: ${email}`);
     const newPlayer = this.playersRepository.changePlayerName(
       email.toLowerCase(),

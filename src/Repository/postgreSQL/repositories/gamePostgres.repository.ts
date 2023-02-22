@@ -23,7 +23,7 @@ export class GamePostgreSQLRepository implements IGameRepository {
       findedGameOnDB.rows.length === 0 ? undefined : findedGameOnDB.rows[0];
     return game;
   }
-  findGameByIndex(gameName: string): number {
+  updatePlayersCountOnGame(idGame: string): Promise<Game | null> {
     throw new Error("Method not implemented.");
   }
 }

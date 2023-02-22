@@ -1,10 +1,9 @@
 import { IGameRepository } from "../../../../Repository/interfaces/IGameRepository";
-import { Game } from "../../entities/Game";
-import { IGameName } from "../../interfaces/gameName.interface";
+import { Game, gameNameType } from "../../entities/Game";
 
 export class AddGameToDataBaseUseCase {
   constructor(private gamesRepository: IGameRepository) {}
-  async execute({ name }: IGameName) {
+  async execute({ name }: gameNameType) {
     const gameAlreadyExists = await this.gamesRepository.findGameByName(name);
     if (gameAlreadyExists) {
       return gameAlreadyExists;

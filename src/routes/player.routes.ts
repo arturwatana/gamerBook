@@ -28,7 +28,7 @@ playerRouter.post("/players/:email/addgame", (req, res) => {
   addGameToPlayerController.handle(req, res);
 });
 
-playerRouter.put("/players/:email/removegame", (req, res) => {
+playerRouter.delete("/players/:email/removegame", (req, res) => {
   deleteGameFromPlayerController.handle(req, res);
 });
 

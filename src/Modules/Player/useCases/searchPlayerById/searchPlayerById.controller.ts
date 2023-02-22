@@ -1,5 +1,4 @@
 import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
-
 import { Request, Response } from "express";
 import { SearchPlayerByIdUseCase } from "./searchPlayerById.usecase";
 
@@ -8,7 +7,6 @@ export class SearchPlayerByIdController {
   async handle(req: Request, res: Response) {
     try {
       const { id } = req.params;
-
       const searchPlayerByIdUseCase = new SearchPlayerByIdUseCase(
         this.playersRepository
       );

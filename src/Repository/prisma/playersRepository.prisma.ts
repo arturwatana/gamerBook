@@ -25,9 +25,7 @@ export class PlayersPrismaRepository implements IPlayerRepository {
     });
     return findedPlayer;
   }
-  findIndexById(id: string): number {
-    throw new Error("Method not implemented.");
-  }
+
   async deletePlayer(id: string): Promise<Player | null> {
     const deletedPlayer = await prismaClient.player.delete({
       where: {

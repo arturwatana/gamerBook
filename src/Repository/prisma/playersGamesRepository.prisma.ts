@@ -1,6 +1,6 @@
-import { Game, Player } from "@prisma/client";
+import { Game } from "../../Modules/Game/entities/Game";
 import { IGame } from "../../Modules/Game/interfaces/game.inteface";
-import { IPlayerFull } from "../../Modules/Player/interfaces/playerFull.interface";
+import { Player } from "../../Modules/Player/entities/Player";
 import { PlayerGame } from "../../Modules/PlayerGame/PlayerGame.entity";
 import { IPlayerGamesRepository } from "../interfaces/IPlayerGamesRepository";
 import { prismaClient } from "./prisma.config";
@@ -31,9 +31,28 @@ export class PlayerGamesPrismaRepository implements IPlayerGamesRepository {
           gamesCreated.push(gameCreatedInDB);
           return;
         }
-        console.log(gamesCreated);
       });
     }
     return gamesCreated;
+  }
+
+  async deleteVinculatedGamesFromPlayer(idPlayer: string): Promise<void> {
+    await prismaClient.player_Games.deleteMany({
+      where: {
+        player_id: idPlayer,
+      },
+    });
+  }
+
+  async deleteVinculatedSingleGameFromPlayer(
+    idPlayer: string,
+    game: Game
+  ): Promise<void> {
+    await prismaClient.player_Games.deleteMany({
+      where: {
+        player_id: idPlayer,
+        game_id: game.id,
+      },
+    });
   }
 }

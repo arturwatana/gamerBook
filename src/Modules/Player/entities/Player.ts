@@ -1,7 +1,5 @@
 import { Game } from "@prisma/client";
 import { v4 as uuidv4, validate } from "uuid";
-import { IGame } from "../../Game/interfaces/game.inteface";
-import { PlayerGame } from "../../PlayerGame/PlayerGame.entity";
 import { IPlayerFull } from "../interfaces/playerFull.interface";
 
 export class Player {

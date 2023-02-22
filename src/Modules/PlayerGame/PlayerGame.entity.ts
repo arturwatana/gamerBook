@@ -1,10 +1,5 @@
 import { randomUUID } from "crypto";
 
-type PlayerGameType = {
-  player_id: string;
-  game_id: string;
-};
-
 export class PlayerGame {
   id: string;
   player_id: string;

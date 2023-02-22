@@ -5,6 +5,7 @@ import { ChangePlayerNameController } from "./changePlayerName.controller";
 
 const playersRepositoryMemory = PlayersRepositoryMemory.getInstance();
 const playersPostgreSQLRepository = new PlayersPostgreSQLRepository();
+
 const playersPrismaRepository = new PlayersPrismaRepository();
 const changePlayerNameController = new ChangePlayerNameController(
   playersPrismaRepository
