@@ -10,23 +10,35 @@ export class AddGameToPlayerUseCase {
     private playerGamesRepository: IPlayerGamesRepository
   ) {}
   async execute(name: string, email: string) {
-    const player = await this.playerRepository.findByEmail(email);
-    if (!player) {
+    const findedPlayerInDB = await this.playerRepository.findByEmail(email);
+    if (!findedPlayerInDB) {
       throw new Error("Player not found by email: " + email);
     }
     const gameAlreadyExistsOnDB = await this.gameRepository.findGameByName(
       name
     );
-    if (gameAlreadyExistsOnDB) {
-      gameAlreadyExistsOnDB.players++;
-      return player;
-    }
-    const game = Game.create({ name });
-    game.players++;
+    console.log(gameAlreadyExistsOnDB);
     let gameArray: Game[] = [];
-    const savedGameInDB = await this.gameRepository.save(game);
-    gameArray.push(savedGameInDB);
-    await this.playerGamesRepository.vinculateGamesToPlayer(player, gameArray);
+    if (gameAlreadyExistsOnDB) {
+      gameArray.push(gameAlreadyExistsOnDB);
+    } else {
+      const game = Game.create({ name });
+      game.players++;
+      const savedGameInDB = await this.gameRepository.save(game);
+      gameArray.push(savedGameInDB);
+    }
+    await this.playerGamesRepository.vinculateGamesToPlayer(
+      findedPlayerInDB,
+      gameArray
+    );
+    const playerGames =
+      await this.playerGamesRepository.searchGamesVinculatedToPlayer(
+        findedPlayerInDB.id
+      );
+    const player = {
+      ...findedPlayerInDB,
+      playerGames,
+    };
     return player;
   }
 }

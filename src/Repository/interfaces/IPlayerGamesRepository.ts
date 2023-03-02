@@ -1,5 +1,7 @@
-import { Game, Player } from "@prisma/client";
+import { Game } from "../../Modules/Game/entities/Game";
 import { IGame } from "../../Modules/Game/interfaces/game.inteface";
+import { Player } from "../../Modules/Player/entities/Player";
+import { PlayerGame } from "../../Modules/PlayerGame/PlayerGame.entity";
 
 export interface IPlayerGamesRepository {
   vinculateGamesToPlayer(
@@ -11,4 +13,5 @@ export interface IPlayerGamesRepository {
     idPlayer: string,
     game: Game
   ): Promise<void>;
+  searchGamesVinculatedToPlayer(idPlayer: string): Promise<Game[]>;
 }

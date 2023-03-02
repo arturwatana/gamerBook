@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { addNewPlayerController } from "../../src/Modules/Player/useCases/addNewPlayer/index";
-import { searchPlayerByIdController } from "../Modules/Player/useCases/searchPlayerById";
-import { addGameToPlayerController } from "../Modules/Game/useCases/addGameToPlayer";
+import { searchPlayerByIdController } from "../Modules/Player/useCases/searchPlayerById/index";
+import { addGameToPlayerController } from "../Modules/Game/useCases/addGameToPlayer/index";
 import { changePlayerNameController } from "../Modules/Player/useCases/changePlayerName/index";
 import { deleteGameFromPlayerController } from "../Modules/Game/useCases/deleteGameFromPlayer/index";
 import { deletePlayerByIdContoller } from "../Modules/Player/useCases/deletePlayer/index";

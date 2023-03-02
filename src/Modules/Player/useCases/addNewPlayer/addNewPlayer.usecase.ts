@@ -20,6 +20,12 @@ export class AddNewPlayerUseCases {
   ) {}
 
   async execute({ name, age, password, email, games }: PlayerRequestType) {
+    const player = Player.create({
+      name,
+      age,
+      password,
+      email,
+    });
     const playerAlreadyExists = await this.playerRepository.findByEmail(email);
     if (playerAlreadyExists) {
       throw new Error(`Player ${email} already exists`);
@@ -38,12 +44,6 @@ export class AddNewPlayerUseCases {
         playerGames.push(dbGame);
       }
     }
-    const player = Player.create({
-      name,
-      age,
-      password,
-      email,
-    });
     const playerSavedOnDB = await this.playerRepository.save(player);
     if (!games) {
       return playerSavedOnDB;

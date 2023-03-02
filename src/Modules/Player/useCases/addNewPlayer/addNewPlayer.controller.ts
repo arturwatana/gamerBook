@@ -24,7 +24,7 @@ export class AddNewPlayerController {
         message: "Player created in database!",
       });
     } catch (err: any) {
-      res.status(401).json({
+      res.status(400).json({
         message: err.message,
       });
     }
