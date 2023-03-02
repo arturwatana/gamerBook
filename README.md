@@ -14,6 +14,7 @@ Esta API é um projeto para criar um sistema de cadastro de jogadores e jogos. A
 - PostgreSQL
 - Docker
 - Prisma ORM
+- Swagger
 - SOLID
 
 <br>
