@@ -147,6 +147,43 @@
         }
       }
     },
+    "/players/${playerEmail}/addgame": {
+      "post": {
+        "tags": ["Players"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "playerEmail",
+            "description": "O email do player para adicionar um jogo",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameNameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddPlayerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Jogador ou jogo nao encontrado"
+          }
+        }
+      }
+    },
     "/players/{playerEmail}/removegame": {
       "delete": {
         "tags": ["Players"],
@@ -180,6 +217,49 @@
           },
           "400": {
             "description": "Jogador ou jogo nao encontrado"
+          }
+        }
+      }
+    },
+    "/games": {
+      "get": {
+        "tags": ["Games"],
+        "description": "Listar todos os jogos cadastrados",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetGamesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/addgame": {
+      "post": {
+        "tags": ["Games"],
+        "description": "Cadastrar um jogo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameNameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateGameResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -251,10 +331,25 @@
             "items": {
               "type": "object",
               "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Id do jogo",
+                  "example": "GAMENAMEID_TEST"
+                },
                 "name": {
                   "type": "string",
                   "description": "Nome do jogo",
                   "example": "GAMENAME_TEST"
+                },
+                "players": {
+                  "type": "integer",
+                  "description": "Quantidade de jogadores cadastrados",
+                  "example": 5
+                },
+                "created_At": {
+                  "type": "string",
+                  "description": "Nome do jogo",
+                  "example": "date-time"
                 }
               }
             }
@@ -346,6 +441,56 @@
             "type": "string",
             "description": "Nome do Jogo",
             "example": "NAME_TEST"
+          }
+        }
+      },
+      "CreateGameResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id do jogo",
+            "example": "GAMENAMEID_TEST"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do jogo",
+            "example": "GAMENAME_TEST"
+          },
+          "players": {
+            "type": "integer",
+            "description": "Quantidade de jogadores cadastrados",
+            "example": 5
+          },
+          "created_At": {
+            "type": "string",
+            "description": "Nome do jogo",
+            "example": "date-time"
+          }
+        },
+        "GetGamesResponse": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Id do jogador",
+              "example": "ID_TEST"
+            },
+            "name": {
+              "type": "string",
+              "description": "Nome do jogador",
+              "example": "NAME_TEST"
+            },
+            "players": {
+              "type": "integer",
+              "description": "Quantidade de jogadores",
+              "example": 2
+            },
+            "created_At": {
+              "type": "string",
+              "description": "Data de criacao do jogador",
+              "example": "date-time"
+            }
           }
         }
       }
