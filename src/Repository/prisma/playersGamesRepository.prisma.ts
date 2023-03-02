@@ -14,7 +14,15 @@ export class PlayerGamesPrismaRepository implements IPlayerGamesRepository {
     if (props) {
       games.map(async (game) => {
         const playerGame = PlayerGame.create(props.id, game.id);
-
+        const gameAlreadyExistOnPlayer =
+          await prismaClient.player_Games.findFirst({
+            where: {
+              game_id: game.id,
+            },
+          });
+        if (gameAlreadyExistOnPlayer) {
+          return;
+        }
         const gameCreated = await prismaClient.player_Games.create({
           data: {
             id: playerGame.id,
@@ -54,5 +62,25 @@ export class PlayerGamesPrismaRepository implements IPlayerGamesRepository {
         game_id: game.id,
       },
     });
+  }
+
+  async searchGamesVinculatedToPlayer(idPlayer: string): Promise<Game[]> {
+    const playerGamesInDB = await prismaClient.player_Games.findMany({
+      where: {
+        player_id: idPlayer,
+      },
+    });
+    const playerGames: Game[] = [];
+    for (let i = 0; i < playerGamesInDB.length; i++) {
+      const findedGameInDB = await prismaClient.game.findFirst({
+        where: {
+          id: playerGamesInDB[i].game_id,
+        },
+      });
+      if (findedGameInDB) {
+        playerGames.push(findedGameInDB);
+      }
+    }
+    return playerGames;
   }
 }

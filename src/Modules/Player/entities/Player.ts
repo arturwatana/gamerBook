@@ -11,6 +11,16 @@ export class Player {
   created_At: Date;
 
   private constructor(props: IPlayerFull) {
+    if (!props.name || !props.age || !props.email) {
+      throw new Error("Invalid Player to create");
+    }
+    if (
+      typeof props.name != "string" ||
+      typeof props.email != "string" ||
+      typeof props.age != "number"
+    ) {
+      throw new Error("Invalid Player to create");
+    }
     this.id = uuidv4();
     this.name = props.name.toLowerCase();
     this.age = props.age;
@@ -23,12 +33,6 @@ export class Player {
     const player = new Player(props);
     return player;
   }
-  static validateInputs(props: IPlayerFull) {
-    if (!props.name || !props.age || !props.email) {
-      throw new Error("Invalid Player to create");
-    }
-  }
-
   static idIsValid(id: string): boolean {
     const isValid = validate(id);
     return isValid;

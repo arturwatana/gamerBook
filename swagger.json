@@ -1,0 +1,354 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de cadastro de jogos e jogadores",
+    "description": "Esta API é responsável pelo cadastro de jogos e jogadores",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/players": {
+      "get": {
+        "tags": ["Players"],
+        "description": "Consulta de jogadores cadastrados",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPlayersResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/addPlayer": {
+      "post": {
+        "tags": ["Players"],
+        "description": "Adicionar um jogador",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPlayerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddPlayerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro ao cadastrar jogador"
+          }
+        }
+      }
+    },
+    "/players/{playerId}": {
+      "get": {
+        "tags": ["Players"],
+        "parameters": [
+          {
+            "name": "playerId",
+            "in": "path",
+            "description": "Id do jogador",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPlayersResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Jogador nao encontrado"
+          }
+        }
+      }
+    },
+    "/players/{playerId}/deleteplayer": {
+      "delete": {
+        "tags": ["Players"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "playerId",
+            "description": "O id do player a ser deletado",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddPlayerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Jogador nao encontrado"
+          }
+        }
+      }
+    },
+    "/players/{playerEmail}/changename": {
+      "put": {
+        "tags": ["Players"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "playerEmail",
+            "description": "O email do player para trocar o nome",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePlayerNameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddPlayerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Jogador nao encontrado"
+          }
+        }
+      }
+    },
+    "/players/{playerEmail}/removegame": {
+      "delete": {
+        "tags": ["Players"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "playerEmail",
+            "description": "O email do player para remover um jogo",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GameNameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddPlayerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Jogador ou jogo nao encontrado"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GetPlayersResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id do jogador",
+            "example": "ID_TEST"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do jogador",
+            "example": "NAME_TEST"
+          },
+          "age": {
+            "type": "integer",
+            "description": "Idade do jogador",
+            "example": 27
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do jogador",
+            "example": "PASSWORD_TEST"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do jogador",
+            "example": "EMAIL_TEST"
+          },
+          "created_At": {
+            "type": "string",
+            "description": "Data de criacao do jogador",
+            "example": "date-time"
+          }
+        }
+      },
+      "AddPlayerRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do jogador",
+            "example": "NAME_TEST"
+          },
+          "age": {
+            "type": "integer",
+            "description": "Idade do jogador",
+            "example": 27
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do jogador",
+            "example": "PASSWORD_TEST"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do jogador",
+            "example": "EMAIL_TEST"
+          },
+          "games": {
+            "type": "array",
+            "description": "Jogos que o jogador gosta de jogar",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Nome do jogo",
+                  "example": "GAMENAME_TEST"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AddPlayerResponse": {
+        "type": "object",
+        "properties": {
+          "createdPlayer": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Id do jogador",
+                "example": "ID_TEST"
+              },
+              "name": {
+                "type": "string",
+                "description": "Nome do jogador",
+                "example": "NAME_TEST"
+              },
+              "age": {
+                "type": "integer",
+                "description": "Idade do jogador",
+                "example": 27
+              },
+              "password": {
+                "type": "string",
+                "description": "Senha do jogador",
+                "example": "PASSWORD_TEST"
+              },
+              "email": {
+                "type": "string",
+                "description": "Email do jogador",
+                "example": "EMAIL_TEST"
+              },
+              "created_At": {
+                "type": "string",
+                "description": "Data de criacao do jogador",
+                "example": "date-time"
+              },
+              "playerGames": {
+                "type": "array",
+                "description": "Jogos do jogador cadastrado",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Id do jogador",
+                      "example": "ID_TEST"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Nome do jogador",
+                      "example": "NAME_TEST"
+                    },
+                    "players": {
+                      "type": "integer",
+                      "description": "Jogadores que possuem o jogo"
+                    },
+                    "created_At": {
+                      "type": "string",
+                      "description": "Data de criacao do jogador",
+                      "example": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ChangePlayerNameRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Novo nome do jogador",
+            "example": "NEWNAME_TEST"
+          }
+        }
+      },
+      "GameNameRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do Jogo",
+            "example": "NAME_TEST"
+          }
+        }
+      }
+    }
+  }
+}

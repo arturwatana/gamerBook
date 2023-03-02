@@ -17,9 +17,14 @@ export class DeletePlayerByIdUseCase {
     if (!player) {
       throw new Error("Player not found by id: " + id);
     }
+    const playerGames =
+      await this.playerGamesRepository.searchGamesVinculatedToPlayer(player.id);
     await this.playerGamesRepository.deleteVinculatedGamesFromPlayer(player.id);
-    const deletedPlayer = await this.playersRepository.deletePlayer(id);
-    console.log(deletedPlayer);
+    const deletedPlayerinDb = await this.playersRepository.deletePlayer(id);
+    const deletedPlayer = {
+      ...deletedPlayerinDb,
+      playerGames,
+    };
     return deletedPlayer;
   }
 }

@@ -13,7 +13,7 @@ export class AddGameToDataBaseController {
       const gameSaved = await addGameToDataBaseUseCase.execute({ name });
       res.send(gameSaved);
     } catch (err: any) {
-      res.json({ message: err.message });
+      res.status(400).json({ message: err.message });
     }
   }
 }

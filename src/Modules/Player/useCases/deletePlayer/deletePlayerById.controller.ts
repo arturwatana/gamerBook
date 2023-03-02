@@ -18,7 +18,7 @@ export class DeletePlayerByIdController {
       const deletedPlayer = await deletePlayerByIdUseCase.execute(id);
       res.json(deletedPlayer);
     } catch (err: any) {
-      res.status(401).json({
+      res.status(400).json({
         message: err.message,
       });
     }
