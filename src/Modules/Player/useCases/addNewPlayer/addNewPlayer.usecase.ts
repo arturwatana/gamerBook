@@ -32,7 +32,7 @@ export class AddNewPlayerUseCases {
     }
     let playerGames: Game[] = [];
     for (let i = 0; i <= games.length - 1; i++) {
-      let dbGame = await this.gameRepository.findGameByName(games[i]?.name);
+      let dbGame = await this.gameRepository.findGameByName(games[i].name);
       if (!dbGame) {
         games[i] = Game.create(games[i]);
         let gameCreatedOnDB = await this.gameRepository.save(games[i]);
@@ -48,11 +48,10 @@ export class AddNewPlayerUseCases {
     if (!games) {
       return playerSavedOnDB;
     }
-    const vinculateGamesToPlayer =
-      await this.playerGamesRepository.vinculateGamesToPlayer(
-        playerSavedOnDB,
-        playerGames
-      );
+    await this.playerGamesRepository.vinculateGamesToPlayer(
+      playerSavedOnDB,
+      playerGames
+    );
     const createdPlayer = { ...playerSavedOnDB, playerGames };
     return createdPlayer;
   }

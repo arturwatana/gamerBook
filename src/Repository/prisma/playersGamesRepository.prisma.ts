@@ -18,6 +18,7 @@ export class PlayerGamesPrismaRepository implements IPlayerGamesRepository {
           await prismaClient.player_Games.findFirst({
             where: {
               game_id: game.id,
+              player_id: playerGame.id,
             },
           });
         if (gameAlreadyExistOnPlayer) {
