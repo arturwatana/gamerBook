@@ -12,12 +12,15 @@ export class AddGameToPlayerUseCase {
   async execute(name: string, email: string) {
     const findedPlayerInDB = await this.playerRepository.findByEmail(email);
     if (!findedPlayerInDB) {
-      throw new Error("Player not found by email: " + email);
+      throw new Error("Player not found " + email);
     }
     const gameAlreadyExistsOnDB = await this.gameRepository.findGameByName(
       name
     );
-    console.log(gameAlreadyExistsOnDB);
+    const playerGames =
+      await this.playerGamesRepository.searchGamesVinculatedToPlayer(
+        findedPlayerInDB.id
+      );
     let gameArray: Game[] = [];
     if (gameAlreadyExistsOnDB) {
       gameArray.push(gameAlreadyExistsOnDB);
@@ -31,10 +34,6 @@ export class AddGameToPlayerUseCase {
       findedPlayerInDB,
       gameArray
     );
-    const playerGames =
-      await this.playerGamesRepository.searchGamesVinculatedToPlayer(
-        findedPlayerInDB.id
-      );
     const player = {
       ...findedPlayerInDB,
       playerGames,

@@ -1,26 +1,26 @@
-import { Game } from "../../Modules/Game/entities/Game";
+import { IGame } from "../../Modules/Game/interfaces/game.inteface";
 import { IGameRepository } from "../interfaces/IGameRepository";
 import { prismaClient } from "./prisma.config";
 
 export class GamesPrismaRepository implements IGameRepository {
-  async updatePlayersCountOnGame(idGame: string): Promise<Game> {
-    const playersWithGame = await prismaClient.player_Games.findMany({
+  async updatePlayersCountOnGame(game: IGame): Promise<IGame> {
+    //Nao encontra os registros do primeiro ID
+    const playersCount = await prismaClient.player_Games.findMany({
       where: {
-        game_id: idGame,
+        game_id: game.id,
       },
     });
     const gameUpdated = await prismaClient.game.update({
       where: {
-        id: idGame,
+        id: game.id,
       },
       data: {
-        players: playersWithGame.length,
+        players: playersCount.length,
       },
     });
     return gameUpdated;
   }
-
-  async save(data: Game): Promise<Game> {
+  async save(data: IGame): Promise<IGame> {
     const gameSaved = await prismaClient.game.create({
       data: {
         id: data.id,
@@ -30,7 +30,7 @@ export class GamesPrismaRepository implements IGameRepository {
     });
     return gameSaved;
   }
-  async findGameByName(gameName: string): Promise<Game | null> {
+  async findGameByName(gameName: string): Promise<IGame | null> {
     const findedGame = await prismaClient.game.findFirst({
       where: {
         name: gameName.toLowerCase(),
@@ -39,11 +39,15 @@ export class GamesPrismaRepository implements IGameRepository {
     return findedGame;
   }
 
-  async showAllGames(): Promise<Game[]> {
+  async showAllGames(): Promise<IGame[]> {
     const savedGamesOnDB = await prismaClient.game.findMany();
     return savedGamesOnDB;
   }
-  async findGameByIndex(gameName: string): Promise<Game | null> {
-    throw new Error(`Could not find`);
+  async findGameByIndex(gameName: string): Promise<number | null> {
+    const findedGame = await prismaClient.game.findMany();
+    const findedGameIndex = findedGame.findIndex(
+      (game) => game.name === gameName
+    );
+    return findedGameIndex;
   }
 }

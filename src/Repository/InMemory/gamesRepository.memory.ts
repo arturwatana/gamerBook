@@ -1,4 +1,5 @@
 import { Game } from "../../Modules/Game/entities/Game";
+import { IGame } from "../../Modules/Game/interfaces/game.inteface";
 import { IGameRepository } from "../interfaces/IGameRepository";
 
 export class GameRepositoryMemory implements IGameRepository {
@@ -16,21 +17,21 @@ export class GameRepositoryMemory implements IGameRepository {
     return GameRepositoryMemory.instance;
   }
 
-  async save(data: Game): Promise<Game> {
+  async save(data: IGame): Promise<IGame> {
     data.name = data.name.toLowerCase();
     this.games?.push(data);
     return data;
   }
 
-  async findGameByName(gameName: string): Promise<Game | null> {
+  async findGameByName(gameName: string): Promise<IGame | null> {
     const findedGame = await this.games?.find((game) => {
       return game.name.toLowerCase() == gameName.toLowerCase();
     });
     return findedGame || null;
   }
 
-  async updatePlayersCountOnGame(idGame: string): Promise<Game | null> {
-    const findedGame = await this.games?.find((game) => game.id == idGame);
+  async updatePlayersCountOnGame(game: IGame): Promise<IGame | null> {
+    const findedGame = await this.games?.find((game) => game.id == game.id);
     if (findedGame) {
       findedGame.players++;
       return findedGame;
@@ -38,7 +39,7 @@ export class GameRepositoryMemory implements IGameRepository {
       return null;
     }
   }
-  async showAllGames(): Promise<Game[]> {
+  async showAllGames(): Promise<IGame[]> {
     return this.games;
   }
 }

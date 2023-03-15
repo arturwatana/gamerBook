@@ -31,6 +31,10 @@ export class AddNewPlayerUseCases {
       throw new Error(`Player ${email} already exists`);
     }
     let playerGames: Game[] = [];
+    const playerSavedOnDB = await this.playerRepository.save(player);
+    if (!games) {
+      return playerSavedOnDB;
+    }
     for (let i = 0; i <= games.length - 1; i++) {
       let dbGame = await this.gameRepository.findGameByName(games[i].name);
       if (!dbGame) {
@@ -40,19 +44,27 @@ export class AddNewPlayerUseCases {
         games[i].createdAt = gameCreatedOnDB.createdAt;
         playerGames.push(games[i]);
       } else {
-        await this.gameRepository.updatePlayersCountOnGame(dbGame.id);
         playerGames.push(dbGame);
       }
-    }
-    const playerSavedOnDB = await this.playerRepository.save(player);
-    if (!games) {
-      return playerSavedOnDB;
     }
     await this.playerGamesRepository.vinculateGamesToPlayer(
       playerSavedOnDB,
       playerGames
     );
-    const createdPlayer = { ...playerSavedOnDB, playerGames };
+    const playerGamesUpdated: Game[] = [];
+    for (let i = 0; i < playerGames.length; i++) {
+      const gameUpdated = await this.gameRepository.updatePlayersCountOnGame(
+        playerGames[i]
+      );
+      if (gameUpdated) {
+        playerGamesUpdated.push(gameUpdated);
+      }
+    }
+
+    const createdPlayer = {
+      ...playerSavedOnDB,
+      playerGames: playerGamesUpdated,
+    };
     return createdPlayer;
   }
 }

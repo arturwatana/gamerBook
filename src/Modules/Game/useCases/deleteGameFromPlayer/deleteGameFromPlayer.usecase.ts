@@ -10,14 +10,16 @@ export class DeleteGameFromPlayerUseCase {
   ) {}
   async execute(email: string, gameName: string) {
     const player = await this.playersRepository.findByEmail(email);
-    const findedGame = await this.gameRepository.findGameByName(gameName);
     if (!player) throw new Error(`Player not found: ${email}`);
-    if (!findedGame) throw new Error(`Game not found: ${gameName}`);
+    const playerGames =
+      await this.playerGamesRepository.searchGamesVinculatedToPlayer(player.id);
+    const findedGame = playerGames.find((game) => game.name === gameName);
+    if (!findedGame) throw new Error(`Game not found: ${gameName} in ${email}`);
     await this.playerGamesRepository.deleteVinculatedSingleGameFromPlayer(
       player.id,
       findedGame
     );
-
-    return player;
+    await this.gameRepository.updatePlayersCountOnGame(findedGame);
+    return { ...player, playerGames };
   }
 }

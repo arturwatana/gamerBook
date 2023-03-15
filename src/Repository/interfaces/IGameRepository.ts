@@ -1,8 +1,8 @@
-import { Game } from "../../Modules/Game/entities/Game";
+import { IGame } from "../../Modules/Game/interfaces/game.inteface";
 
 export interface IGameRepository {
-  save(data: Game): Promise<Game>;
-  findGameByName(gameName: string): Promise<Game | null>;
-  showAllGames(): Promise<Game[]>;
-  updatePlayersCountOnGame(idGame: string): Promise<Game | null>;
+  save(data: IGame): Promise<IGame>;
+  findGameByName(gameName: string): Promise<IGame | null>;
+  showAllGames(): Promise<IGame[]>;
+  updatePlayersCountOnGame(game: IGame): Promise<IGame | null>;
 }
