@@ -173,7 +173,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddPlayerResponse"
+                  "$ref": "#/components/schemas/GameToPlayerResponse"
                 }
               }
             }
@@ -210,7 +210,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddPlayerResponse"
+                  "$ref": "#/components/schemas/GameToPlayerResponse"
                 }
               }
             }
@@ -331,25 +331,10 @@
             "items": {
               "type": "object",
               "properties": {
-                "id": {
-                  "type": "string",
-                  "description": "Id do jogo",
-                  "example": "GAMENAMEID_TEST"
-                },
                 "name": {
                   "type": "string",
                   "description": "Nome do jogo",
                   "example": "GAMENAME_TEST"
-                },
-                "players": {
-                  "type": "integer",
-                  "description": "Quantidade de jogadores cadastrados",
-                  "example": 5
-                },
-                "created_At": {
-                  "type": "string",
-                  "description": "Nome do jogo",
-                  "example": "date-time"
                 }
               }
             }
@@ -444,6 +429,60 @@
           }
         }
       },
+      "GameToPlayerResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome do jogador",
+            "example": "NAME_TEST"
+          },
+          "age": {
+            "type": "integer",
+            "description": "Idade do jogador",
+            "example": 27
+          },
+          "password": {
+            "type": "string",
+            "description": "Senha do jogador",
+            "example": "PASSWORD_TEST"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do jogador",
+            "example": "EMAIL_TEST"
+          },
+          "playerGames": {
+            "type": "array",
+            "description": "Jogos que o jogador gosta de jogar",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Id do jogo",
+                  "example": "GAMENAMEID_TEST"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Nome do jogo",
+                  "example": "GAMENAME_TEST"
+                },
+                "players": {
+                  "type": "integer",
+                  "description": "Quantidade de jogadores cadastrados",
+                  "example": 5
+                },
+                "created_At": {
+                  "type": "string",
+                  "description": "Nome do jogo",
+                  "example": "date-time"
+                }
+              }
+            }
+          }
+        }
+      },
       "CreateGameResponse": {
         "type": "object",
         "properties": {
@@ -467,8 +506,11 @@
             "description": "Nome do jogo",
             "example": "date-time"
           }
-        },
-        "GetGamesResponse": {
+        }
+      },
+      "GetGamesResponse": {
+        "type": "array",
+        "items": {
           "type": "object",
           "properties": {
             "id": {
