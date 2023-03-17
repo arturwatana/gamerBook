@@ -10,39 +10,37 @@ export class PlayerGamesPrismaRepository implements IPlayerGamesRepository {
     props: Player | null,
     games: IGame[]
   ): Promise<IGame[]> {
-    const gamesCreated: Game[] = [];
+    const gamesVinculated: Game[] = [];
     if (props) {
-      games.map(async (game) => {
-        const playerGame = PlayerGame.create(props.id, game.id);
+      for (let i = 0; i <= games.length - 1; i++) {
+        const playerGame = PlayerGame.create(props.id, games[i].id);
         const gameAlreadyExistOnPlayer =
           await prismaClient.player_Games.findFirst({
             where: {
-              game_id: game.id,
-              player_id: playerGame.id,
+              game_id: games[i].id,
+              player_id: playerGame.player_id,
             },
           });
-        if (gameAlreadyExistOnPlayer) {
-          return;
+        if (!gameAlreadyExistOnPlayer) {
+          const gameCreated = await prismaClient.player_Games.create({
+            data: {
+              id: playerGame.id,
+              player_id: playerGame.player_id,
+              game_id: playerGame.game_id,
+            },
+          });
+          const gameVinculatedToPlayer = await prismaClient.game.findFirst({
+            where: {
+              id: gameCreated.id,
+            },
+          });
+          if (gameVinculatedToPlayer) {
+            gamesVinculated.push(gameVinculatedToPlayer);
+          }
         }
-        const gameCreated = await prismaClient.player_Games.create({
-          data: {
-            id: playerGame.id,
-            player_id: playerGame.player_id,
-            game_id: playerGame.game_id,
-          },
-        });
-        const gameCreatedInDB = await prismaClient.game.findFirst({
-          where: {
-            id: gameCreated.id,
-          },
-        });
-        if (gameCreatedInDB) {
-          gamesCreated.push(gameCreatedInDB);
-          return;
-        }
-      });
+      }
     }
-    return gamesCreated;
+    return gamesVinculated;
   }
 
   async deleteVinculatedGamesFromPlayer(idPlayer: string): Promise<void> {
