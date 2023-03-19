@@ -20,7 +20,7 @@ export class PlayersPrismaRepository implements IPlayerRepository {
   async findByEmail(email: string): Promise<Player | null> {
     const findedPlayer = await prismaClient.player.findUnique({
       where: {
-        email,
+        email: email.toLowerCase(),
       },
     });
     return findedPlayer;
