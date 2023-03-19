@@ -16,8 +16,8 @@ app.use(express.json());
 
 const port = 8080;
 
-const connectPostgreSQL = new ConnectToPostgreS();
-connectPostgreSQL.connect();
+// const connectPostgreSQL = new ConnectToPostgreS();
+// connectPostgreSQL.connect();
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(playerRouter);
