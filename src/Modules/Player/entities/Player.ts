@@ -1,6 +1,6 @@
 import { Game } from "@prisma/client";
 import { v4 as uuidv4, validate } from "uuid";
-import { IPlayerFull } from "../interfaces/playerFull.interface";
+import { IPlayerRequest } from "../interfaces/IPlayerRequest.interface";
 
 export class Player {
   id: string;
@@ -9,15 +9,17 @@ export class Player {
   password: string;
   email: string;
   created_At: Date;
+  games?: Game[];
 
-  private constructor(props: IPlayerFull) {
-    if (!props.name || !props.age || !props.email) {
+  private constructor(props: IPlayerRequest) {
+    if (!props.name || !props.age || !props.email || !props.password) {
       throw new Error("Invalid Player to create");
     }
     if (
       typeof props.name != "string" ||
       typeof props.email != "string" ||
-      typeof props.age != "number"
+      typeof props.age != "number" ||
+      typeof props.password != "string"
     ) {
       throw new Error("Invalid Player to create");
     }
@@ -29,7 +31,7 @@ export class Player {
     this.created_At = new Date();
   }
 
-  static create(props: IPlayerFull) {
+  static create(props: IPlayerRequest) {
     const player = new Player(props);
     return player;
   }
