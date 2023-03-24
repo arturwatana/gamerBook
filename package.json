@@ -22,7 +22,8 @@
   "scripts": {
     "dev": "nodemon ./src/server.ts",
     "vercel-build": "npx prisma migrate deploy",
-    "test": "vitest"
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "author": "Artur Watanabe",
   "license": "ISC",
