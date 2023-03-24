@@ -11,6 +11,9 @@ export class Game {
   createdAt: Date;
 
   private constructor({ name }: gameNameType) {
+    if (!name) {
+      throw new Error("A game must have a name");
+    }
     this.id = randomUUID();
     this.name = name;
     this.players = 0;
