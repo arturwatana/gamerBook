@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { IGameRepository } from "../../../../Repository/interfaces/IGameRepository";
 import { IPlayerGamesRepository } from "../../../../Repository/interfaces/IPlayerGamesRepository";
 import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
-import { AddNewPlayerUseCases } from "./addNewPlayer.usecase";
+import { AddNewPlayerUseCase } from "./addNewPlayer.usecase";
 
 export class AddNewPlayerController {
   constructor(
@@ -13,7 +13,7 @@ export class AddNewPlayerController {
   async handle(req: Request, res: Response) {
     try {
       const data = req.body;
-      const addNewPlayerUseCase = new AddNewPlayerUseCases(
+      const addNewPlayerUseCase = new AddNewPlayerUseCase(
         this.playersRepository,
         this.gameRepository,
         this.playersGamesRepository

@@ -4,10 +4,7 @@ import { Player } from "../../Modules/Player/entities/Player";
 import { PlayerGame } from "../../Modules/PlayerGame/PlayerGame.entity";
 
 export interface IPlayerGamesRepository {
-  vinculateGamesToPlayer(
-    props: Player | null,
-    games: IGame[]
-  ): Promise<IGame[]>;
+  vinculateGamesToPlayer(props: Player, games: IGame[]): Promise<Game[]>;
   deleteVinculatedGamesFromPlayer(idPlayer: string): Promise<void>;
   deleteVinculatedSingleGameFromPlayer(
     idPlayer: string,

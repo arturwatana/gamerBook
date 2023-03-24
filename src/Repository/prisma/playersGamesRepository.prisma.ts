@@ -6,10 +6,7 @@ import { IPlayerGamesRepository } from "../interfaces/IPlayerGamesRepository";
 import { prismaClient } from "./prisma.config";
 
 export class PlayerGamesPrismaRepository implements IPlayerGamesRepository {
-  async vinculateGamesToPlayer(
-    props: Player | null,
-    games: IGame[]
-  ): Promise<IGame[]> {
+  async vinculateGamesToPlayer(props: Player, games: IGame[]): Promise<Game[]> {
     const gamesVinculated: Game[] = [];
     if (props) {
       for (let i = 0; i <= games.length - 1; i++) {

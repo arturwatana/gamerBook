@@ -1,18 +1,18 @@
 import { Game } from "../../../Game/entities/Game";
 import { Player } from "../../entities/Player";
 import { IPlayerRepository } from "../../../../Repository/interfaces/IPlayerRepository";
-import { IGame } from "../../../Game/interfaces/game.inteface";
 import { IGameRepository } from "../../../../Repository/interfaces/IGameRepository";
 import { IPlayerGamesRepository } from "../../../../Repository/interfaces/IPlayerGamesRepository";
+import { IGameName } from "../../../Game/interfaces/gameName.interface";
 
-type PlayerRequestType = {
+export type PlayerRequestType = {
   name: string;
   age: number;
   email: string;
   password: string;
-  games: IGame[];
+  games?: IGameName[];
 };
-export class AddNewPlayerUseCases {
+export class AddNewPlayerUseCase {
   constructor(
     private playerRepository: IPlayerRepository,
     private gameRepository: IGameRepository,
@@ -38,11 +38,11 @@ export class AddNewPlayerUseCases {
     for (let i = 0; i <= games.length - 1; i++) {
       let dbGame = await this.gameRepository.findGameByName(games[i].name);
       if (!dbGame) {
-        games[i] = Game.create(games[i]);
-        let gameCreatedOnDB = await this.gameRepository.save(games[i]);
-        games[i].id = gameCreatedOnDB.id;
-        games[i].createdAt = gameCreatedOnDB.createdAt;
-        playerGames.push(games[i]);
+        const game = Game.create(games[i]);
+        let gameCreatedOnDB = await this.gameRepository.save(game);
+        game.id = gameCreatedOnDB.id;
+        game.createdAt = gameCreatedOnDB.createdAt;
+        playerGames.push(game);
       } else {
         playerGames.push(dbGame);
       }
@@ -63,7 +63,7 @@ export class AddNewPlayerUseCases {
 
     const createdPlayer = {
       ...playerSavedOnDB,
-      playerGames: playerGamesUpdated,
+      games: playerGamesUpdated,
     };
     return createdPlayer;
   }
