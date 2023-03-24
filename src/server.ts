@@ -20,9 +20,6 @@ const options = {
   customCss: css,
 };
 
-// const connectPostgreSQL = new ConnectToPostgreS();
-// connectPostgreSQL.connect();
-
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 app.use(playerRouter);
 app.use(gamesRouter);
