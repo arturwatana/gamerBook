@@ -1,8 +1,6 @@
-import { create } from "ts-node";
 import { Game } from "../../../Modules/Game/entities/Game";
 import { IGame } from "../../../Modules/Game/interfaces/game.inteface";
 import { Player } from "../../../Modules/Player/entities/Player";
-import { IPlayerFull } from "../../../Modules/Player/interfaces/playerFull.interface";
 import { IPlayerRepository } from "../../interfaces/IPlayerRepository";
 import { client } from "../connect/connectToPostgreSQL.database";
 

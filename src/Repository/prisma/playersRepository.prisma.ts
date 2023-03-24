@@ -1,6 +1,4 @@
-import { IGame } from "../../Modules/Game/interfaces/game.inteface";
 import { Player } from "../../Modules/Player/entities/Player";
-import { IPlayerFull } from "../../Modules/Player/interfaces/playerFull.interface";
 import { IPlayerRepository } from "../interfaces/IPlayerRepository";
 import { prismaClient } from "./prisma.config";
 

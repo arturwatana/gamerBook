@@ -1,7 +1,4 @@
-import { Game } from "../../Modules/Game/entities/Game";
-import { IGame } from "../../Modules/Game/interfaces/game.inteface";
 import { Player } from "../../Modules/Player/entities/Player";
-import { IPlayerFull } from "../../Modules/Player/interfaces/playerFull.interface";
 
 export interface IPlayerRepository {
   save(data: Player): Promise<Player>;
