@@ -14,9 +14,11 @@ Esta API é um projeto para criar um sistema de cadastro de jogadores e jogos. A
 - Express
 - Typescript
 - PostgreSQL
-- Docker
+- Neon (PostgreSQL)
 - Prisma ORM
 - Swagger
+- Vitest
+- Vercel
 - SOLID
 
 <br>
