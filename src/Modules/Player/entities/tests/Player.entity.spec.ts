@@ -25,4 +25,17 @@ describe("Player Entity", () => {
       });
     }).toThrow("Invalid Player to create");
   });
+
+  test("Id created by entity must be an uuidv4 id", () => {
+    const playerMock = {
+      name: "NAME_TEST",
+      age: 20,
+      email: "email@example.com",
+      password: "PASSWORD_TEST",
+    };
+
+    const createdPlayer = Player.create(playerMock);
+    const isValid = Player.idIsValid(createdPlayer.id);
+    expect(isValid).toBeTruthy();
+  });
 });
