@@ -2,7 +2,6 @@ import { describe, expect, test } from "vitest";
 import { GameRepositoryMemory } from "../../../../../Repository/InMemory/gamesRepository.memory";
 import { PlayerGamesMemory } from "../../../../../Repository/InMemory/playerGamesRepository.memory";
 import { PlayersRepositoryMemory } from "../../../../../Repository/InMemory/playersRepository.memory";
-import { IPlayerRequest } from "../../../interfaces/IPlayerRequest.interface";
 import {
   AddNewPlayerUseCase,
   PlayerRequestType,
@@ -39,5 +38,16 @@ describe("Change Player Name", () => {
     );
 
     expect(playerWithNameChanged?.name).toEqual(newName);
+  });
+
+  test("Should not be able to change player name if the email was not found ", () => {
+    expect(async () => {
+      const playerRepository = PlayersRepositoryMemory.getInstance();
+      const addNewPlayerUseCase = new ChangePlayerNameUseCase(playerRepository);
+      const createdPlayer = await addNewPlayerUseCase.execute(
+        "example@example.com",
+        "newname_test"
+      );
+    }).rejects.toThrow("Player not found: example@example.com");
   });
 });
