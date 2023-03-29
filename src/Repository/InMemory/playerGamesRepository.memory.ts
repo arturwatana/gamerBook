@@ -23,7 +23,6 @@ export class PlayerGamesMemory implements IPlayerGamesRepository {
 
   async vinculateGamesToPlayer(props: Player, games: IGame[]): Promise<Game[]> {
     let playerGames: Game[] = [];
-    const gamesRepository = GameRepositoryMemory.getInstance();
     for (let i = 0; i <= games.length; i++) {
       const playerGame = PlayerGame.create(props?.id, games[i]?.id);
       const gameAlreadyExistOnPlayer = this.items.find((gameSavedToPlayer) => {
@@ -42,16 +41,40 @@ export class PlayerGamesMemory implements IPlayerGamesRepository {
     }
     return playerGames;
   }
-  deleteVinculatedGamesFromPlayer(idPlayer: string): Promise<void> {
-    throw new Error("Method not implemented.");
+  async deleteVinculatedGamesFromPlayer(idPlayer: string): Promise<void> {
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].player_id === idPlayer) {
+        this.items.slice(i, 1);
+      }
+    }
   }
-  deleteVinculatedSingleGameFromPlayer(
+  async deleteVinculatedSingleGameFromPlayer(
     idPlayer: string,
     game: Game
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    for (let i = 0; i < this.items.length; i++) {
+      if (
+        this.items[i].player_id === idPlayer &&
+        this.items[i].game_id === game.id
+      ) {
+        this.items.slice(i, 1);
+      }
+    }
   }
-  searchGamesVinculatedToPlayer(idPlayer: string): Promise<Game[]> {
-    throw new Error("Method not implemented.");
+  async searchGamesVinculatedToPlayer(idPlayer: string): Promise<Game[]> {
+    const playerGamesInDB = this.items.filter(
+      (item) => item.player_id === idPlayer
+    );
+    const gamesRepository = GameRepositoryMemory.getInstance();
+    const playerGames: Game[] = [];
+    for (let i = 0; i <= playerGamesInDB.length; i++) {
+      const findedGameInDB = gamesRepository.games.find(
+        (game) => game.id === playerGamesInDB[i].game_id
+      );
+      if (findedGameInDB) {
+        playerGames.push(findedGameInDB);
+      }
+    }
+    return playerGames;
   }
 }

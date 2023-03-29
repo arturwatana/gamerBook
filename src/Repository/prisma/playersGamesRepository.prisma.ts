@@ -18,6 +18,7 @@ export class PlayerGamesPrismaRepository implements IPlayerGamesRepository {
               player_id: playerGame.player_id,
             },
           });
+
         if (!gameAlreadyExistOnPlayer) {
           const gameCreated = await prismaClient.player_Games.create({
             data: {

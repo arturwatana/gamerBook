@@ -30,8 +30,8 @@ export class GameRepositoryMemory implements IGameRepository {
     return findedGame || null;
   }
 
-  async updatePlayersCountOnGame(game: IGame): Promise<IGame | null> {
-    const findedGame = await this.games?.find((game) => game.id == game.id);
+  async updatePlayersCountOnGame(gameReq: IGame): Promise<IGame | null> {
+    const findedGame = await this.games?.find((game) => game.id == gameReq.id);
     if (findedGame) {
       findedGame.players++;
       return findedGame;

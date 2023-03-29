@@ -42,7 +42,7 @@ export class PlayersRepositoryMemory implements IPlayerRepository {
 
   async deletePlayer(id: string): Promise<Player | null> {
     const playerIndex = this.findIndexById(id);
-    if (this.players) {
+    if (playerIndex > -1) {
       const findedPlayer = this.players[playerIndex];
       this.players.splice(playerIndex, 1);
       return findedPlayer;
