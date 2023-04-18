@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://admin:admin@localhost:5432"
+  url      = "postgres://admin:admin@localhost:5432/gamerBook"
 }
 model Game {
   id String @id
