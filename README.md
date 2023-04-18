@@ -1,8 +1,25 @@
 # GamerBook
 
-demo: https://gamer-book.vercel.app/docs/
-
 Esta API é um projeto para criar um sistema de cadastro de jogadores e jogos. As funcionalidades implementadas incluem cadastrar jogadores, verificação de e-mail único, buscar jogadores pelo e-mail e excluir jogadores. Além disso, também foi implementado o cadastro de jogos, não sendo possível cadastrar um jogo com o mesmo nome e podendo adicionar ou remover um jogo de um jogador.
+
+Para iniciar este projeto localmente, siga os comandos:
+
+```bash
+npm install
+```
+
+Inicie o container do postgres e sincronize as migrations do prisma:
+
+```bash
+docker-compose up -d
+npx prisma migrate dev
+```
+
+inicie o projeto com o comando:
+
+```bash
+npm run dev
+```
 
 <br>
 
